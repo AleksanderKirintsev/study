@@ -6,11 +6,11 @@ using namespace std;
 
 int main() {
     srand(time(NULL));
-    const int N = 10;
+    const int N = 30;
     int a[N];
     double s = 0,min;
 
-    for (int i = 0; i < 10; ++i)
+    for (int i = 0; i < N; ++i)
         a[i] = 1 + rand()%10; // случайные числа от 1 до 10
 
     for (int i = 0; i < N; ++i)
@@ -23,7 +23,7 @@ int main() {
 
     s=s/N;
     min = a[0];
-    for (int i = 0;i < 10;++i)
+    for (int i = 0;i < N;++i)
         if(abs(a[i]-s) < abs(min-s))
             min = a[i];
 
