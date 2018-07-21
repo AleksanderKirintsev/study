@@ -21,7 +21,7 @@ int main()
         a = rand() % MAXV;// случайное число от 1 до 10
         cout << a << " ";
 
-        if ( a == max)
+        if ( a == max )
             q++;
 
         if ( a > max )
