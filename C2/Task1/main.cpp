@@ -32,5 +32,6 @@ int main()
             min = a[i];
 
     cout << min;
+
     return 0;
 }
