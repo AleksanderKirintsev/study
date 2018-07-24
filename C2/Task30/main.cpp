@@ -7,10 +7,10 @@ using namespace std;
 int main()
 {
     srand ( time ( NULL ) );
-
     const int N = 30;
     int a[N];
-    int k = 0;
+    int k = 0, j = -1;
+
     for ( int i = 0; i < N; ++i )
         a[i] = 1 + rand() % 10; // случайные числа от 1 до 10
 
@@ -20,16 +20,18 @@ int main()
 
     for ( int i = 0; i < N; ++i )
     {
-        cin » a[i];
+
         if ( a[i] > 0 )
             k++;
+
         if ( k == 3 )
         {
-            cout << i + 1;
-            return 0;
+            j = i + 1;
+            break;
         }
     }
-    cout << -1;
+
+    cout << j;
 
     return 0;
 

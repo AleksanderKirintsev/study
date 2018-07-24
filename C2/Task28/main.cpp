@@ -16,19 +16,19 @@ int main()
 
     for ( int i = 0; i < N; ++i )
         cout << a[i] << " ";
+    cout << endl;
 
     for ( int i = 0; i < N; ++i )
         s += a[i];
-
-    cout << endl;
-
     s = s / N;
+
     min = a[0];
     for ( int i = 0; i < N; ++i )
         if ( abs ( a[i] - s ) < abs ( min - s ) )
             min = a[i];
 
     cout  << min;
+
     return 0;
 
 }

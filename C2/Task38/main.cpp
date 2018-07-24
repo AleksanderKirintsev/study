@@ -40,6 +40,7 @@ int main()
                 a[1] = a[0];
             a[0] = 0;
         }
+
     cout << a[1];
     return 0;
 }

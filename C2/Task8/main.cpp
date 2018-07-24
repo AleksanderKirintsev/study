@@ -20,7 +20,7 @@ int main()
     cout << endl;
 
     for ( int i = 0; i < N; ++i )
-        if ( a[i] % 5 == 0 )
+        if ( abs ( a[i] % 10 ) == 5 )
         {
             s += a[i];
             j++;

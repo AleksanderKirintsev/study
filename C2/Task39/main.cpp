@@ -24,13 +24,14 @@ int main()
         for ( int j = 1; j <= a[i]; j++ )
             if ( a[i] % j == 0 )
                 l++;
+
         if ( l > lmax )
         {
             lmax = l;
-            k = i;
+            k = i + 1;
             l = 0;
         }
     }
-    cout << k + 1;
+    cout << k;
     return 0;
 }

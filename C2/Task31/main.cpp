@@ -12,16 +12,14 @@ int main()
     int k = 0, max;
 
     for ( int i = 0; i < N; ++i )
-        a[i] = 1 + rand() % 10; // случайные числа от 1 до 10
+        a[i] = 1 + rand() % 100; // случайные числа от 1 до 100
 
     for ( int i = 0; i < N; ++i )
         cout << a[i] << " ";
     cout << endl;
 
-
     max = a[0] + a[1];
-
-    for ( int i = 0; i < N-1; ++i )
+    for ( int i = 1; i < N-1; ++i )
         if ( a[i] + a[i + 1] > max )
         {
             max = a[i] + a[i + 1];

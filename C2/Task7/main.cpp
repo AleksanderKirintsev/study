@@ -1,33 +1,30 @@
 #include <iostream>
-#include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <string>
+
 using namespace std;
 
 int main()
 {
     srand ( time ( NULL ) );
-    const int N = 30;
-    int a[N], j, x;
+    const int N = 10;
+    int a[N], i, j = 0, x;
 
+    for ( i = 0; i < N; ++i )
+        a[i] = rand() % 20; // случайные числа от 0 до 100
+    x = rand() % 20;// случайное число 0 до 100
 
-    for ( int i = 0; i < N; ++i )
-        a[i] = rand() % 100; // случайные числа от 0 до 100
-    x = rand() % 100;// случайное число 0 до 100
-
-    for ( int i = 0; i < N; ++i )
+    for ( i = 0; i < N; ++i )
         cout << a[i] << " ";
+    cout << endl << x << endl;
 
-    cout << endl;
-    cout << x << endl;
 
-    for ( int i = 0; i < N; ++i )
+    for ( i = N - 1; i >= 0; --i )
         if ( a[i] == x )
-        {
-            cout << i + 1;
-            return 0;
-        }
+            j = i + 1;
 
-    cout << "No elements";
+    cout << ( j > 0 ? to_string ( j ) : "No elements" );
+
     return 0;
 }

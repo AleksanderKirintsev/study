@@ -24,10 +24,8 @@ int main()
             s += a[i];
             x++;
         }
-    if ( x > 0 )
-        cout << s / x;
-    else
-        cout << 0;
+
+    cout << ( x > 0 ? s / x : 0 );
 
     return 0;
 }

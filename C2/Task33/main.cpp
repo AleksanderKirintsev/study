@@ -12,14 +12,15 @@ int main()
     int min1, min2;
 
     for ( int i = 0; i < N; ++i )
-        a[i] = 1 + rand() % 10; // случайные числа от 1 до 10
+        a[i] = 1 + rand() % 1000; // случайные числа от 1 до 100
 
-    min1 = a[0];
-    min2 = a[1];
+
     for ( int i = 0; i < N; ++i )
         cout << a[i] << " ";
     cout << endl;
 
+    min1 = a[0];
+    min2 = a[1];
     for ( int i = 0; i < N; ++i )
         for ( int j = 0; j < N; ++j )
             if ( abs ( a[i] - a[j] ) < abs ( min1 - min2 ) && i != j )

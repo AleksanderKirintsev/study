@@ -12,7 +12,7 @@ int main()
     int k = 1, kMax = 1;
 
     for ( int i = 0; i < N; ++i )
-        a[i] = 1 + rand() % 10; // случайные числа от 1 до 10
+        a[i] = 1 + rand() % 10; // случайные числа от 1 до 100
 
     for ( int i = 0; i < N; ++i )
         cout << a[i] << " ";
@@ -31,6 +31,8 @@ int main()
                 kMax = k;
             k = 1;
         }
+
     cout << kMax;
+
     return 0;
 }

@@ -12,13 +12,14 @@ int main()
     int min, max;
 
     for ( int i = 0; i < N; ++i )
-        a[i] = 1 + rand() % 10; // случайные числа от 1 до 10
-    min = a[0];
-    max = a[0];
+        a[i] = 1 + rand() % 100; // случайные числа от 1 до 100
+
     for ( int i = 0; i < N; ++i )
         cout << a[i] << " ";
-
     cout << endl;
+
+    min = a[0];
+    max = a[0];
     for ( int i = 0; i < N; ++i )
     {
         if ( a[i] > max )
@@ -26,6 +27,8 @@ int main()
         if ( a[i] < min )
             min = a[i];
     }
+
     cout << max - min;
+
     return 0;
 }

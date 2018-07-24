@@ -21,8 +21,7 @@ int main()
         if ( a[i] < min && a[i] > 20 )
             min = a[i];
 
-
-
     cout << min;
+
     return 0;
 }
