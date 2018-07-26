@@ -2,24 +2,22 @@
 #include <cmath>
 #include <cstdlib>
 #include <ctime>
+#include <fstream>
 using namespace std;
 
 int main()
 {
     srand ( time ( NULL ) );
 
-    int N; // 4 байта
-    const int MAXV = 10; // 4 байта
-    N = 1 + rand() % 1000; // случайное число от 1 до 1000
+    ifstream input ( "tests\\00" );
+    ofstream output ( "tests\\out_optimal" );
 
-    int max, q = 1, a; // 12 байт
-
-    max = 0;
+    const int N = 10; // 4 байта
+    int max = 0, q = 1, a; // 12 байт
 
     for ( int i = 0; i < N; i++ )
     {
-        a = rand() % MAXV;// случайное число от 1 до 10
-        cout << a << " ";
+        input >> a;
 
         if ( a == max )
             q++;
@@ -32,9 +30,11 @@ int main()
 
 
     }
-    cout << endl << N << endl;
 
-    cout << q;
+    output << q;
+
+    input.close();
+    output.close();
 
     return 0;
 }
