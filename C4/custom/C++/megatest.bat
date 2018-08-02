@@ -10,5 +10,5 @@ optimal.exe < megatest.out > optimal.out
 fc /a simple.out optimal.out
 )
 
-del *.exe *out
+del *.exe 
 pause

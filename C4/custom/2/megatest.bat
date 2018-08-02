@@ -7,8 +7,8 @@ for /L %%I in (1,1,10000) do (
 megatest.exe > megatest.out
 simple.exe < megatest.out > simple.out
 optimal.exe < megatest.out > optimal.out
-fc /a simple.out optimal.out
+if fc /a simple.out optimal.out errorlevel 1 (echo) else (fc /a simple.out optimal.out)
 )
 
-del *.exe 
+del *.exe  *.out
 pause

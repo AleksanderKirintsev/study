@@ -15,9 +15,28 @@ int main()
 
     for ( int j = 0; j < 5; j++ )
     {
+        string g;
+        switch ( j )
+        {
+        case 0:
+            g += "0";
+            break;
+        case 1:
+            g += "1";
+            break;
+        case 2:
+            g += "2";
+            break;
+        case 3:
+            g += "3";
+            break;
+        case 4:
+            g += "4";
+            break;
+        }
 
-        ofstream input ( "tests\\0" + to_string(j));
-        ofstream output ( "tests\\0"+ to_string(j) +".a");
+        ofstream input ( "tests\\0" + g );
+        ofstream output ( "tests\\0" + g + ".a" );
 
         int N;
         N = rand() % 6 + 5;
