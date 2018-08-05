@@ -9,13 +9,13 @@ using namespace std;
 
 int main()
 {
+    const int TLim = 5,MAXV = 20 ;
     srand ( time ( NULL ) );
 
     int answer;
 
-    for ( int j = 0; j < 5; j++ )
+    for ( int j = 0; j < TLim; j++ )
     {
-
         ofstream input ( "tests\\0" + to_string(j));
         ofstream output ( "tests\\0"+ to_string(j) +".a");
 
@@ -29,10 +29,10 @@ int main()
 
         for ( int i = 0; i < N; i++ )
         {
-            a[i] = 1 + rand() % 20;
+            a[i] = 1 + rand() % MAXV;
 
             cout << a[i] << " ";
-            input << a[i] << " ";
+            input << a[i] << endl;
         }
 
         cout << endl << "answer: ";

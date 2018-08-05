@@ -63,9 +63,6 @@ int main()
     srand ( time ( NULL ) );
 
     const int MAXV = 100, TLim = 100000;
-    int k = 0;
-
-    ofstream out("tests\\faileds_tests");
 
     for ( int i = 0; i < TLim; i++ )
     {
@@ -74,21 +71,15 @@ int main()
         for ( int i = 0; i < n; i++ )
             a[i] = 1 + rand() % MAXV;
         if ( optimal() != simple() ){
-            k++;
-            out << endl << "---------------------------------"<< endl;
-            out << n << endl;
 
-            for(int i = 0; i < n; i++){
-                out << a[i] << " ";
-            }
-            out << endl << "simple out: " << simple()  << " optimal out: " << optimal();
-            out << endl << "---------------------------------"<<endl;
-            }
+        ñout << n << endl;
 
+        for(int i = 0; i < n; i++)
+                ñout << a[i] << " ";
+            break;
+            }
     }
-
-    cout << k << " Errors" << endl;
     cout << "Done!";
-    out.close();
+
     return 0;
 }
