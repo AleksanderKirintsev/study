@@ -5,5 +5,5 @@ FOR %%i IN ("tests\*.a") DO (
 %~n0.exe < tests\%%~ni > tests\%%~ni.out
 fc /a tests\%%~ni.a tests\%%~ni.out 
 )
-del %~n0.exe *.o *.layout *.depend tests\*.out
-rd /S /Q bin obj
+del %~n0.exe tests\*.out
+

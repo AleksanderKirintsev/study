@@ -6,4 +6,4 @@ FOR %%i IN ("tests\*.a") DO (
 fc /a tests\%%~ni.a tests\%%~ni.out 
 )
 del %~n0.exe *.o *.layout *.depend tests\*.out
-rd /S /Q bin obj
+

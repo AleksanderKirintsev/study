@@ -1,5 +1,4 @@
 @echo off
 g++ -std=c++11 %~n0.cpp -o %~n0.exe
 %~n0.exe
-del %~n0.exe *.o *.layout *.depend 
-rd /S /Q bin obj
+del %~n0.exe 
