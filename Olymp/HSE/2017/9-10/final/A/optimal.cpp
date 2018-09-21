@@ -1,41 +1,26 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
+
 using namespace std;
 
 int main() {
-    short int N, M, x, min_t = 10001, circle = 0; //10 байт
-    short int  num[101], time[101]; //404 байта
+    cin.tie ( 0 );
+    cin.sync_with_stdio ( 0 );
+    cout.tie ( 0 );
 
-    cin >> N >> M;
+    short int n, m;
+    cin >> n >> m;
 
-    for ( short int i = 1; i <= N; i++ ) {
-        num[i] = 0;
-        time[i] = 0;
+    short int x, winner, q[n + 1] = {}, max = 0;
 
-    }
-
-    for ( short int i = 0; i < M; i++ ) {
+    for ( int i = 0; i < m; i++ ) {
         cin >> x;
-        num[x]++;
-        time[x] = i;
+        q[x]++;
 
-    }
-
-    for ( short int i = 1; i <= N; i++ ) {
-        if (num[i] > circle)
-            circle = num[i];
-
-    }
-
-    for ( short int i = 1; i <= N; i++ ) {
-        if ( num[i] == circle && time[i] < min_t ) {
-            min_t = time[i];
-            x = i;
-
+        if ( max < q[x] ) {
+            max = q[x];
+            winner = x;
         }
     }
-
-    cout << x;
+    cout << winner;
     return 0;
 }
