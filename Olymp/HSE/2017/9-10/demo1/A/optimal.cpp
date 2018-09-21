@@ -3,7 +3,8 @@
 using namespace std;
 
 int main() {
-    int n, m, a, b, q1 = 0, q2 = 0; //q1 кол-во раветвитилей, q2 кол-ва мультиплексаторов
+    long long int n, m, a, b, q1 = 0, q2 = 0; //q1 кол-во раветвитилей, q2 кол-ва мультиплексаторов
+
     cin >> n >> m >> a >> b;
 
     if ( n >= m )
@@ -20,8 +21,6 @@ int main() {
             q1 = m;
         cout << q2 * b + q1 * a;
     }
-
-
 
     return 0;
 }
