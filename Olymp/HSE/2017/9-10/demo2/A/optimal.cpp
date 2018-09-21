@@ -1,27 +1,32 @@
 #include <iostream>
 
 using namespace std;
+struct Time {
+    int h, m, s;
+};
+istream& operator>> ( istream& is, Time& t ) {
+    char c;
+    cin >> t.h >> c >> t.m >> c >> t.s;
+}
+bool operator<= ( Time& l, Time& r ) {
+    return ! ( ( l.h > r.h ) || ( ( l.h == r.h ) && ( l.m > r.m ) ) || ( ( l.h == r.h ) && ( l.m == r.m ) && ( l.s > r.s ) ) ) ;
+}
 
 int main() {
-    int h, m, s, lh, lm, ls, days = 1, n; // lh lm ls хранят предыдущее значение
-    char c;
+    cin.tie ( 0 );
+    cin.sync_with_stdio ( 0 );
+    cout.tie ( 0 );
+    int days = 1, n;
+    Time prev, curr;
 
     cin >> n;
-    cin >> lh >> c >> lm >> c >> ls;
+    cin >> prev;
 
     for ( int i = 1; i < n; i++ ) {
-        cin >> h >> c >> m >> c >> s;
-
-        if ( h < lh )
+        cin >> curr;
+        if ( curr <= prev )
             days++;
-        else if ( h == lh && m < lh )
-            days++;
-        else if ( h == lh && m == lh && s <= ls )
-            days++;
-
-        lh = h;
-        lm = m;
-        ls = s;
+        prev = curr;
 
     }
     cout << days;
