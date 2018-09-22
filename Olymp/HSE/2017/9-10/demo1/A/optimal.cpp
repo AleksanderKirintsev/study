@@ -3,8 +3,8 @@
 using namespace std;
 
 int main() {
-    long long int n, m, a, b, q1 = 0, q2 = 0; //q1 кол-во раветвитилей, q2 кол-ва мультиплексаторов
-
+    long long int n, m, q1 = 0, q2 = 0; //q1 кол-во раветвитилей, q2 кол-ва мультиплексаторов
+    int a,b;
     cin >> n >> m >> a >> b;
 
     if ( n >= m )
