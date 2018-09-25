@@ -1,34 +1,34 @@
 #include <iostream>
-
 using namespace std;
-
+struct Cycler {
+    int q, idx, num;
+};
+bool operator> ( Cycler& l,  Cycler& r ) {
+    return ( l.q > r.q ) || ( ( l.q == r.q ) && ( l.idx < r.idx ) );
+}
 int main() {
-    short int N, M, a[10000], l_max_t, min_t, max = 0, ans, num = 0;
-    cin >> N >> M;
+    cin.tie(0);
+    cin.sync_with_stdio(0);
+    cout.tie(0);
 
+    int N, M, a[10000];
+    Cycler curr, leader;
+    cin >> N >> M ;
 
-    for ( int i = 0; i < M; i++ ) {
+    for ( int i = 0; i < M; i++ )
         cin >> a[i];
-    }
 
+    leader = {0, 0, 0};
     for ( int i = 1; i <= N; i++ ) {
-        num = 0;
-        for ( int j = 0; j < M; j++ ) {
+        curr = {0, 0, i};
+        for ( int j = 0; j < M; j++ )
             if ( a[j] == i ) {
-                num++;
-                l_max_t = j;
+                curr.idx = j;
+                curr.q++;
             }
-        }
-        //cout << l_max_t << " " << min_t << " " << i << endl;
-        if ( num > max ) {
-            max = num;
-            min_t = l_max_t;
-            ans = i;
-        }
-        if ( num == max && l_max_t < min_t )
-            ans = i;
+        if ( curr > leader )
+            leader = curr;
     }
-
-    cout << ans;
+    cout << leader.num;
     return 0;
 }
