@@ -40,20 +40,17 @@ int optimal() {
 int main() {
     srand ( time ( 0 ) );
     int q = 0;
-    for ( int i = 0; i < 100;i++ ) {
+    for ( int i = 0; i < 100000;i++ ) {
         n = 1 + rand() % 20;
         m = 1 + rand() % 20;
         a = 1 + rand () % 100;
         b = 1 + rand () % 100;
         if ( optimal() != simple() ) {
-            q++;
-            ofstream fout ( "mistakes" );
-            fout << n << " " << m << " " << a << " " << b << endl;
-            fout << "optimal res = " << optimal() << " simple res = " << simple() << endl;
-            fout.close();
+            cout << "error";
+            return 0;
         }
     }
 
-    cout << q << " errors";
+    cout << "Done!";
     return 0;
 }
