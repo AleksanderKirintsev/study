@@ -10,25 +10,35 @@ using namespace std;
 #define ALIM 100
 #define MLIM 10
 #define TLIM 15
-int main()
-{
-    int n, m, a, b,ans;
+int main() {
+    int n, m, a, b, ans;
 
     srand ( time ( NULL ) );
 
-    for ( int t = 4; t < TLIM; t++ )
-    {
-        n = 1 + rand()% NLIM;
+    for ( int t = 4; t < TLIM; t++ ) {
+        n = 1 + rand() % NLIM;
         m = n + MLIM - rand() % ( MLIM / 2 );
         a = 1 + rand() % ALIM;
         b = 1 + rand() % ALIM;
 
 
-        cout << n << endl << m  << endl << a << endl << b << endl;
+        //cout << n << endl << m  << endl << a << endl << b << endl;
 
-        cin >> ans;
+        if ( n >= m )
+            cout << 0;
+        int x = m - n, y = 0, s = a * x;
+        do {
+            x = max ( x - 4, 0 );
+            y++;
+            s = min ( a * x + b * y, s );
+        } while ( x > 0 );
+        //cout << s;
+
+
+
+
         cout << endl;
-        ofstream infile ( "tests\\" + to_string ( t / 10 ) + to_string ( t % 10) );
+        ofstream infile ( "tests\\" + to_string ( t / 10 ) + to_string ( t % 10 ) );
         infile << n << endl;
         infile << m << endl;
         infile << a << endl;
@@ -36,7 +46,7 @@ int main()
         infile.close();
 
         ofstream afile ( "tests\\" + to_string ( t / 10 ) + to_string ( t % 10 ) + ".a" );
-        afile << ans;
+        afile << s;
         afile.close();
     }
 
