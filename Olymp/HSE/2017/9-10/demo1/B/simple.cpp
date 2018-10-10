@@ -3,53 +3,30 @@
 #include <algorithm>
 #include <cmath>
 using namespace std;
-const int TMAX = 1e9;
-const int TMIN = -273;
+int n, k;
+int a[int ( 2e5 )];
 
-int qbite ( int n ) {
-    int res = 0;
-    while ( n ) {
-        res += ( n & 1 ); // прибавить 1, если первый бит равен 1
-        n >>= 1; // сдвинуть на 1 бит вправо
+int simple () {
+    int smin = 2e9;
+    if ( n - k <= 1 )
+        return 0;
+    for ( int c = 0; c < ( 1 << n ); c++ ) {
+        if ( __builtin_popcount ( c ) == k ) {
+            int tmin = 1e9, tmax = -273;
+            for ( int i = 0; i < n; i++ )
+                if ( ( ( c & ( 1 << i ) ) == 0 ) ) {
+                    tmin = min ( tmin, a[i] );
+                    tmax = max ( tmax, a[i] );
+                }
+                smin = min ( smin, tmax - tmin );
+        }
     }
-
-    return res;
+    return smin;
 }
-
 int main() {
-    cin.tie ( 0 );
-    cin.sync_with_stdio ( 0 );
-    cout.tie ( 0 );
-
-    int n = 5, k, a[200000], mins = TMAX - TMIN;
     cin >> n >> k;
-
-    if ( n == k || n - k == 1 ) {
-        cout << 0;
-    } else {
-        for ( int i = 0; i < n; i++ ) {
-            cin >> a[i];
-        }
-
-        for ( int code = 0; code < ( 1 << n ); code++ ) {
-            if ( qbite ( code ) == k ) {
-                int tmin = TMAX, tmax = TMIN;
-
-                for ( int i = 0; i < n; i++ )
-                    if ( ( ( code & ( 1 << i ) ) == 0 ) ) {
-
-                        if ( a[i] > tmax )
-                            tmax = a[i];
-
-                        if ( a[i] < tmin )
-                            tmin = a[i];
-                    }
-                if ( tmax - tmin < mins )
-                    mins = tmax - tmin;
-
-            }
-        }
-        cout << mins;
-    }
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+    cout << simple();
     return 0;
 }
