@@ -7,7 +7,7 @@ using namespace std;
 
 
 #define NLIM 10
-#define ALIM 100
+#define ALIM 20
 #define MLIM 10
 #define TLIM 15
 int main() {
@@ -22,22 +22,9 @@ int main() {
         b = 1 + rand() % ALIM;
 
 
-        //cout << n << endl << m  << endl << a << endl << b << endl;
+        cout << n << " " << m  << " " << a << " " << b << endl;
+        cin >> ans;
 
-        if ( n >= m )
-            cout << 0;
-        int x = m - n, y = 0, s = a * x;
-        do {
-            x = max ( x - 4, 0 );
-            y++;
-            s = min ( a * x + b * y, s );
-        } while ( x > 0 );
-        //cout << s;
-
-
-
-
-        cout << endl;
         ofstream infile ( "tests\\" + to_string ( t / 10 ) + to_string ( t % 10 ) );
         infile << n << endl;
         infile << m << endl;
@@ -46,7 +33,7 @@ int main() {
         infile.close();
 
         ofstream afile ( "tests\\" + to_string ( t / 10 ) + to_string ( t % 10 ) + ".a" );
-        afile << s;
+        afile << ans;
         afile.close();
     }
 

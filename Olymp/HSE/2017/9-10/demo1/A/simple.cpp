@@ -1,6 +1,6 @@
 #include <iostream>
-
 using namespace std;
+
 long long int n, m;
 int a, b;
 
@@ -16,9 +16,7 @@ int simple() {
     return s;
 }
 
-
 int main() {
-
     cin >> n >> m >> a >> b;
     cout << simple();
 
