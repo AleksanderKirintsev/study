@@ -1,10 +1,7 @@
 #include <iostream>
-#include <vector>
-#include <algorithm>
-#include <cmath>
 using namespace std;
-int n, k;
-int a[int ( 2e5 )];
+int n, k, a[27];
+
 
 int simple () {
     int smin = 2e9;
@@ -18,14 +15,14 @@ int simple () {
                     tmin = min ( tmin, a[i] );
                     tmax = max ( tmax, a[i] );
                 }
-                smin = min ( smin, tmax - tmin );
+            smin = min ( smin, tmax - tmin );
         }
     }
     return smin;
 }
 int main() {
     cin >> n >> k;
-    for (int i = 0; i < n; i++)
+    for ( int i = 0; i < n; i++ )
         cin >> a[i];
     cout << simple();
     return 0;
