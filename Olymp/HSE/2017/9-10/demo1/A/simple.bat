@@ -5,7 +5,8 @@ set dst=tests
 
 FOR %%i IN (%dst%\*.a) DO (
 %~n0.exe < %dst%\%%~ni > %dst%\%%~ni.out
-fc /a %dst%\%%~ni.a %dst%\%%~ni.out 
+fc /a %dst%\%%~ni.a %dst%\%%~ni.out
+del %dst%\%%~ni.out
 )
-del %~n0.exe %dst%\*.out
+del %~n0.exe
 pause 

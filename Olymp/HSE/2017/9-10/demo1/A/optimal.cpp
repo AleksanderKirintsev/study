@@ -2,10 +2,10 @@
 using namespace std;
 #define ll long long
 
-long long int n, m;
+ll n, m;
 int a, b;
 
-int optimal() {
+ll optimal() {
     if (n >= m)
         return 0;
 
