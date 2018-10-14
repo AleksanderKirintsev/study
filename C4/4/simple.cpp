@@ -1,35 +1,43 @@
 #include <iostream>
 #include <iomanip>
 using namespace std;
-int n,q = 0,mq = 0;
-double a[int(2e5)];
 
-double simple () {
-    double smin = 1e6 + 1, z = 0;
+struct TR {
+    int q;
+    double p, m;
+};
 
-    for ( int c = 0; c < ( 1 << n ); c++ ) {
-        if ( __builtin_popcount ( c ) < n ) {
-            q = 0;
-            for ( int i = 0; i < n; i++ )
-                if ( ( ( c & ( 1 << i ) ) == 0 ) ) {
-                    if ( a[i] > 1 ) {
-                        smin = min ( smin, double(a[i]) );
-                        q++;
-                    } else
-                        z = max ( z, double(a[i]));
+int n;
+double a[27];
+
+TR simple () {
+    TR r = {0, 0, 1e6};
+
+    for (int c = 0; c < (1 << n); c++) {
+        int q = __builtin_popcount (c);
+        double p = 1, m = 1e6;
+
+        if (q > 0) {
+            for (int i = 0; i < n; i++){
+                int bit = c & (1 << i);
+                if (bit > 0) {
+                    p *= a[i];
+                    m = min (a[i], m);
                 }
-            mq = max (mq,q);
+            }
+            if ((p == r.p && q <= r.q) || (p > r.p && q > r.q))
+                r = {q, p, m};
         }
     }
-    return (smin == 1e6+1 ? z : smin);
+    return r;
 }
-
 int main() {
     cin >> n;
     for (int i = 0; i < n; i++)
         cin >> a[i];
-    double ans = simple();
-    if (ans <= 1 ) cout << 1 << " " << ans;
-    else cout << mq << fixed << setprecision(1) << " " << ans;
+    TR ans = simple();
+    printf ("%d %0.1f", ans.q, ans.m);
+
     return 0;
-}
+}//0011
+ //0010
