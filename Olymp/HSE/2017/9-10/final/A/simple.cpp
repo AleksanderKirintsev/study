@@ -1,16 +1,15 @@
 #include <iostream>
 using namespace std;
+
 struct Cycler {
     int q, idx, num;
 };
+
 bool operator> ( Cycler& l,  Cycler& r ) {
     return ( l.q > r.q ) || ( ( l.q == r.q ) && ( l.idx < r.idx ) );
 }
-int main() {
-    cin.tie(0);
-    cin.sync_with_stdio(0);
-    cout.tie(0);
 
+int main() {
     int N, M, a[10000];
     Cycler curr, leader;
     cin >> N >> M ;
@@ -29,6 +28,7 @@ int main() {
         if ( curr > leader )
             leader = curr;
     }
+
     cout << leader.num;
     return 0;
 }

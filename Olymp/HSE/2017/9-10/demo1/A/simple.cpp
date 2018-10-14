@@ -8,7 +8,9 @@ int a, b;
 ll simple() {
     if ( n >= m )
         return 0;
+
     ll x = m - n, y = 0, s = a * x,zero = 0;
+
     do {
         x = max ( x - 4, zero);
         y++;
