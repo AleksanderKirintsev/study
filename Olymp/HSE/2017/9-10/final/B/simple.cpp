@@ -52,7 +52,7 @@ int main() {
             }
     }
 
-        //cout << a[i].l << " " << a[i].r << " " << a[i].num << endl;
+       
     nsort();
 
         for ( int i = 0; i < n; i++) //100.000
