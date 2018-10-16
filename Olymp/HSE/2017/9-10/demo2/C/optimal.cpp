@@ -2,38 +2,28 @@
 #include <algorithm>
 using namespace std;
 
-struct piramide {
-    int w, h;
-};
-istream& operator>> (istream& is, piramide& a) {
-    cin >> a.w >> a.h;
-}
-bool operator< (piramide& w1, piramide& w2) {
-    return (w1.w < w2.w || (w1.w == w2.w && w1.h < w2.h));
-}
+#define W first
+#define H second
+#define ll long long
 
 int n;
-piramide a[100000];
+pair<int, int> a[100000];
 
 int main() {
-    long long sum = 0;
+    cin.tie (0);
+    cin.sync_with_stdio (0);
+    cout.tie (0);
 
     cin >> n;
-
     for (int i = 0; i < n; i++)
-        cin >> a[i];
-    sort (a, a + n);
+        cin >> a[i].W >> a[i].H;
 
-    for (int i = 0; i < n;) {
-        int m = a[i].h, c = a[i].w;
-        while (a[i].w == c) {
-            m = max (a[i].h, m);
-            i++;
-        }
-        sum += m;
-    }
+    sort (a, a + n, [](const pair<int,int> &l, const pair<int,int> &r) {return l > r;});
+
+    ll sum = a[0].H;
+    for (int i = 0; i < n;i++)
+        sum += (a[i].W < a[i - 1].W ? a[i].H : 0);
+
     cout << sum;
-
-
     return 0;
 }
