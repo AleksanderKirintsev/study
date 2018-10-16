@@ -5,16 +5,14 @@ using namespace std;
 int n, a[200000], k;
 
 int optimal() {
-    int m = 1e9 + 273;
-
-    if ( n - k <= 1 ) {
+    if ( n - k <= 1)
         return 0;
-    }
+
     sort ( a, a + n );
 
-    for ( int i = 0; i + ( n - k ) <= n; i++ )
-        if ( abs ( a[i] - a[i + ( n - k - 1 )] ) < m )
-            m = abs ( a[i] - a[i + ( n - k - 1 )] );
+    int m = 1e9 + 273;
+    for ( int i = 0; i <= k; i++ )
+        m = min (m, a[i+ n - k - 1] - a[i]);
 
     return m;
 }
