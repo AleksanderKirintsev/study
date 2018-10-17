@@ -4,50 +4,61 @@
 #include <string>
 using namespace std;
 
+#define NLIM 7
+#define Q first
+#define M second
+
+struct TR {
+    int q;
+    double p, m;
+};
+
 int n, q = 0, mq = 1,ans = 1;
-double a[int ( 2e5 )];
+double a[NLIM];
 
-double simple () {
-    double smin = 1e6 + 1, z = 0;
+TR simple () {
+    TR r = {0, 0, 1e6};
 
-    for ( int c = 0; c < ( 1 << n ); c++ ) {
-        if ( __builtin_popcount ( c ) < n ) {
-            q = 0;
-            for ( int i = 0; i < n; i++ )
-                if ( ( ( c & ( 1 << i ) ) == 0 ) ) {
-                    if ( a[i] > 1 ) {
-                        smin = min ( smin, double ( a[i] ) );
-                        q++;
-                    } else
-                        z = max ( z, double ( a[i] ) );
-                }
-            mq = max ( mq, q );
+    for (int c = 1; c < (1 << n); c++) {
+        int q = __builtin_popcount (c);
+        double p = 1, m = 1e6;
+
+        for (int i = 0; i < n; i++) {
+            if ( (c & (1 << i)) > 0) {
+                p *= a[i];
+                m = min (a[i], m);
+            }
         }
+
+        if (p > r.p || (p == r.p && q < r.q))
+            r = {q, p, m};
+
     }
-    return ( smin == 1e6 + 1 ? z : smin );
+    return r;
 }
 
 
-double optimal() {
-    double smin = 1e6 + 1, z = 0;
+pair<int,double> optimal() {
+   pair<int,double> r = {0, 1e6};
+   int z = 0;
     for ( int i = 0; i < n; i++ ) {
         if ( a[i] > 1.0000000 ) {
-            ans++;
-            smin = min ( a[i], smin );
-        } else
-            z = max ( a[i], z );
+            r.Q++;
+            r.M = min ( a[i], r.M );
+        } //else
+            //z = max ( a[i], z );
 
     }
-    if (smin == 1e6 + 1) ans  = 1;
-    return ( smin == 1e6 + 1 ? z : smin ) ;
+    //if (smin == 1e6 + 1) ans  = 1;
+    return r;
 }
 
 int main() {
     srand(time(0));
-    int c, b,d = 0;
+    int c, b;
     for (int t = 0; t < 10000; t++){
 
-    n = 3 + rand()% 8;
+    n = 3 + rand()% (NLIM - 2);
 
     for (int i = 0; i < n; i++){
         string s;
@@ -58,10 +69,17 @@ int main() {
         s += to_string(b);
         a[i] = atof(s.c_str());
         }
-    if (simple() != optimal())
-        d++;
+
+        TR sim = simple();
+        pair<int,double> opt = optimal();
+
+        if (sim.q != opt.Q || sim.m != opt.M ){
+            cout << t << " error!";
+            return 0;
+        }
+
 
     }
-    cout << d << " done!";
+    cout << "done!";
     return 0;
 }

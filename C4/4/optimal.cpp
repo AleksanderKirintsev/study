@@ -7,16 +7,19 @@ int main() {
 
     cin >> n;
 
-    for ( int i = 0; i < n; i++ ) {
+    for (int i = 0; i < n; i++) {
         cin >> a;
-
-        if ( a > 1.0000000 ) {
+        if (a > 1.0000000) {
             ans++;
-            q = min ( a, q );
+            q = min (a, q);
         } else
-            z = max ( a, z );
-
+            z = max (a, z);
     }
-    cout << (ans == 0 ? 1 : ans) << " " << fixed << setprecision(1) << (q == 1e6+1 ? z : q) ;
+
+    ans = (ans == 0 ? 1 : ans);
+    q = (q == 1e6 + 1 ? z : q);
+
+    printf ("%d %0.1f", ans, q);
+
     return 0;
 }
