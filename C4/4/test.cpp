@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <fstream>
 using namespace std;
 
 #define NLIM 7
@@ -13,7 +14,7 @@ struct TR {
     double p, m;
 };
 
-int n, q = 0, mq = 1,ans = 1;
+int n, q = 0, mq = 1, ans = 1;
 double a[NLIM];
 
 TR simple () {
@@ -38,48 +39,65 @@ TR simple () {
 }
 
 
-pair<int,double> optimal() {
-   pair<int,double> r = {0, 1e6};
-   int z = 0;
-    for ( int i = 0; i < n; i++ ) {
-        if ( a[i] > 1.0000000 ) {
+pair<int, double> optimal() {
+    pair<int, double> r = {0, 1e6 + 1};
+    double z = 0;
+    for (int i = 0; i < n; i++) {
+        if (a[i] > 1.0000000) {
             r.Q++;
-            r.M = min ( a[i], r.M );
-        } //else
-            //z = max ( a[i], z );
+            r.M = min (a[i], r.M);
+        } else
+            z = max (a[i], z);
 
     }
-    //if (smin == 1e6 + 1) ans  = 1;
+    if (r.M == 1e6 + 1) {
+        r.Q = 1;
+        r.M = z;
+    }
+
     return r;
 }
 
 int main() {
-    srand(time(0));
+    srand (time (0));
     int c, b;
-    for (int t = 0; t < 10000; t++){
+    for (int t = 0; t < 10000; t++) {
 
-    n = 3 + rand()% (NLIM - 2);
+        n = 3 + rand() % (NLIM - 2);
 
-    for (int i = 0; i < n; i++){
-        string s;
-        c = rand() % 11;
-        b = rand() % 10;
-        s += to_string(c);
-        s += ".";
-        s += to_string(b);
-        a[i] = atof(s.c_str());
+        for (int i = 0; i < n; i++) {
+            string s;
+            c = rand() % 11;
+            b = rand() % 10;
+            s += to_string (c);
+            s += ".";
+            s += to_string (b);
+            a[i] = atof (s.c_str());
         }
 
         TR sim = simple();
-        pair<int,double> opt = optimal();
+        pair<int, double> opt = optimal();
 
-        if (sim.q != opt.Q || sim.m != opt.M ){
-            cout << t << " error!";
+        if (sim.q != opt.Q || sim.m != opt.M) {
+            ofstream fout("error.txt");
+
+            fout << n << endl;
+            for (int i = 0; i < n; i++)
+                fout << a[i] << endl;
+
+            fout << endl;
+
+            fout << "simple " << sim.q << " " << sim.m << endl;
+            fout << "optimal " << opt.Q << " " << opt.M << endl;
+
+            cout <<"error!" << endl;
+
+            fout.close();
             return 0;
         }
 
 
     }
-    cout << "done!";
+    cout << "done!" << endl;
     return 0;
 }
