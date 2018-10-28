@@ -5,7 +5,7 @@
 #include <fstream>
 using namespace std;
 
-#define NLIM 7
+#define NLIM 15
 #define Q first
 #define M second
 
@@ -39,46 +39,42 @@ TR simple () {
 }
 
 
-pair<int, double> optimal() {
-    pair<int, double> r = {0, 1e6 + 1};
+TR optimal() {
+    TR r = {0,1,1e6 + 1};
     double z = 0;
     for (int i = 0; i < n; i++) {
         if (a[i] > 1.0000000) {
-            r.Q++;
-            r.M = min (a[i], r.M);
+            r.p *= a[i];
+            r.q++;
+            r.m = min (a[i], r.m);
         } else
             z = max (a[i], z);
 
     }
-    if (r.M == 1e6 + 1) {
-        r.Q = 1;
-        r.M = z;
+    if (r.m == 1e6 + 1) {
+        r.q = 1;
+        r.m = z;
+        r.p = z;
     }
-
     return r;
 }
 
 int main() {
     srand (time (0));
     int c, b;
-    for (int t = 0; t < 10000; t++) {
+    for (int t = 0; t < 5000; t++) {
 
         n = 3 + rand() % (NLIM - 2);
 
         for (int i = 0; i < n; i++) {
-            string s;
-            c = rand() % 11;
-            b = rand() % 10;
-            s += to_string (c);
-            s += ".";
-            s += to_string (b);
-            a[i] = atof (s.c_str());
+            a[i] = double(rand() % 1000000001) / 10;
         }
 
         TR sim = simple();
-        pair<int, double> opt = optimal();
+        TR opt = optimal();
 
-        if (sim.q != opt.Q || sim.m != opt.M) {
+        if (sim.q != opt.q || sim.m != opt.m || sim.p != opt.p  ) {
+            /*
             ofstream fout("error.txt");
 
             fout << n << endl;
@@ -89,10 +85,10 @@ int main() {
 
             fout << "simple " << sim.q << " " << sim.m << endl;
             fout << "optimal " << opt.Q << " " << opt.M << endl;
-
+            fout.close();
+            */
             cout <<"error!" << endl;
 
-            fout.close();
             return 0;
         }
 
