@@ -26,8 +26,8 @@ TR simple () {
 
         for (int i = 0; i < n; i++) {
             if ( (c & (1 << i)) > 0) {
-                p *= a[i];
-                m = min (a[i], m);
+                p *= a[n-i-1];
+                m = min (a[n-i-1], m);
             }
         }
 
@@ -67,7 +67,7 @@ int main() {
         n = 3 + rand() % (NLIM - 2);
 
         for (int i = 0; i < n; i++) {
-            a[i] = double(rand() % 1000000001) / 10;
+            a[i] = double(rand()) / 10;
         }
 
         TR sim = simple();

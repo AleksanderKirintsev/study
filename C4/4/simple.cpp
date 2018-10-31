@@ -19,8 +19,8 @@ TR simple () {
 
         for (int i = 0; i < n; i++) {
             if ( (c & (1 << i)) > 0) {
-                p *= a[i];
-                m = min (a[i], m);
+                p *= a[n-i-1];
+                m = min (a[n-i-1], m);
             }
         }
 
@@ -34,8 +34,8 @@ int main() {
     cin >> n;
     for (int i = 0; i < n; i++)
         cin >> a[i];
+
     TR ans = simple();
     printf ("%d %0.1f", ans.q, ans.m);
-
     return 0;
 }
