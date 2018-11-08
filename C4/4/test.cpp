@@ -5,9 +5,7 @@
 #include <fstream>
 using namespace std;
 
-#define NLIM 15
-#define Q first
-#define M second
+#define NLIM 5
 
 struct TR {
     int q;
@@ -63,18 +61,17 @@ int main() {
     srand (time (0));
     int c, b;
     for (int t = 0; t < 5000; t++) {
-
         n = 3 + rand() % (NLIM - 2);
 
-        for (int i = 0; i < n; i++) {
-            a[i] = double(rand()) / 10;
-        }
+        for (int i = 0; i < n; i++)
+            a[i] = double(rand() % 91) / 10;
+
 
         TR sim = simple();
         TR opt = optimal();
 
         if (sim.q != opt.q || sim.m != opt.m || sim.p != opt.p  ) {
-            /*
+
             ofstream fout("error.txt");
 
             fout << n << endl;
@@ -84,9 +81,9 @@ int main() {
             fout << endl;
 
             fout << "simple " << sim.q << " " << sim.m << endl;
-            fout << "optimal " << opt.Q << " " << opt.M << endl;
+            fout << "optimal " << opt.q << " " << opt.m << endl;
             fout.close();
-            */
+
             cout <<"error!" << endl;
 
             return 0;

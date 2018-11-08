@@ -3,6 +3,7 @@
 #include <ctime>
 #include <fstream>
 #include <string>
+#include <algorithm>
 using namespace std;
 /*
  1. —генерировать условие случайным образом
@@ -12,43 +13,46 @@ using namespace std;
  5. ѕерейти к пункту 1 если не создано достаточно тестов
 */
 
-#define NLIM 50
+#define NLIM 10
 #define AB 50
 #define TLIM 7
+#define X first
+#define Y second
 int main() {
-    int N, A[AB], B[AB], Aa[AB], Ba[AB];
-
     srand ( time ( NULL ) );
+    int N;
+    pair<int,int> A[10];
+    pair<int,int> B[10];
 
     for ( int t = 3; t < TLIM; t++ ) {
+
         N = NLIM - rand() % ( NLIM / 2 );
         for ( int i = 0; i < N; i++ ) {
-            A[i] = 1 + rand() % AB;
-            B[i] = 1 + A[i] + rand() % (AB - A[i]);
+            A[i].X = 1 + rand() % AB;
+            A[i].Y = 1 + A[i].X + rand() % (AB - A[i].X);
         }
 
-        for (int i = 0; i < n - 1; i++)
-            for (int j = 0; j < n - i - 1; j++){
+        ofstream infile ( "tests\\" + to_string ( t / 10 ) + to_string ( t % 10 ));
+        infile << N << endl;
+        for ( int i = 0; i < N; i++ )
+            infile << A[i].X << " " << A[i].Y << endl;
+        infile.close();
 
-        }
+        sort (A, A + N, [](const pair<int,int> &l, const pair<int,int> &r) {return l.X < r.X;});
 
         cout << N << endl;
-        for ( int i = 0; i < N; i++ )
-            cout << A[i] << " " << B[i] << endl;
+        for ( int i = 0 ; i < N;i++)
+            cout << A[i].X << " " << A[i].Y << endl;
         cout << endl;
-        //for ( int i = 0; i < N; i++ )
-         //   cin >> Aa[i] >> Ba[i];
 
-//        ofstream infile ( "tests\\" + to_string ( t % 10 ) + to_string ( t ) );
-//        infile << N << endl;
-//        for ( int i = 0; i < N; i++ )
-//            infile << A[i] << " " << B[i] << endl;
-//        infile.close();
-//
-//        ofstream afile ( "tests\\0" + to_string ( t % 10 ) + to_string ( t ) + ".a" );
-//        for ( int i = 0; i < N; i++ )
-//            afile << Aa[i] << " " << Ba[i] << endl;
-//        afile.close();
+        for ( int i = 0 ; i < N;i++)
+            cin >> B[i].X >>  B[i].Y;
+        cout << endl;
+
+        ofstream afile ( "tests\\" + to_string ( t / 10 ) + to_string ( t % 10 ) + ".a" );
+        for ( int i = 0; i < N; i++ )
+            afile << B[i].X << " " << B[i].Y << endl;
+        afile.close();
    }
 
 
