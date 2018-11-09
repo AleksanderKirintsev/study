@@ -1,17 +1,19 @@
 #include <iostream>
 using namespace std;
+void fix (int &h, int &m, int &days) {
+    h += m / 60;
+    m %= 60;
+    days += h / 24;
+    h %= 24;
+}
 
-int main()
-{
-    long long int dh,dm,hw,mw,ah,am,tz1,tz2,days = 0; // d - departure, w - in way, a arrive, tz- time zone
-    cin >> dh >> dm;
-    cin >> hw >> mw;
-    cin >> tz1 >> tz2;
+int main() {
+    int hd, md, hf, mf, d, a, days = -2;
+    cin >> hd >> md >> hf >> mf >> d >> a;
 
-    days +=((dh * 3600 + dm * 60) + (hw * 3600 + mw * 60) + (tz2 - tz1) * 3600) / 86400; // время отправление + время в пути + разность часовых поясов
-    ah = (dh + hw) + (tz2 - tz1) + (dm + mw) / 60 - days * 24;
-    am = (mw + dm) % 60;
+    fix (hd += hf, md += mf, days);
+    fix (hd += (a - d) + 48, md, days);
 
-    cout << ah << " " << am << " " << days;
+    cout << hd << " " << md << " " << days;
     return 0;
 }
