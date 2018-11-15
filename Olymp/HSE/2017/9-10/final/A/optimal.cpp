@@ -8,11 +8,11 @@ void fix (int &h, int &m, int &days) {
 }
 
 int main() {
-    int hd, md, hf, mf, d, a, days = -2;
+    int hd, md, hf, mf, d, a, days = 0;
     cin >> hd >> md >> hf >> mf >> d >> a;
 
     fix (hd += hf, md += mf, days);
-    fix (hd += (a - d) + 48, md, days);
+    fix (hd += (a - d) + 48, md, days-=2);
 
     cout << hd << " " << md << " " << days;
     return 0;

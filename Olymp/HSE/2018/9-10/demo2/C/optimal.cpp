@@ -21,7 +21,7 @@ int main() {
     sort (a, a + n, [](const pair<int,int> &l, const pair<int,int> &r) {return l > r;});
 
     ll sum = a[0].H;
-    for (int i = 0; i < n;i++)
+    for (int i = 1; i < n;i++)
         sum += (a[i].W < a[i - 1].W ? a[i].H : 0);
 
     cout << sum;
