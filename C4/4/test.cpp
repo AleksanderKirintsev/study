@@ -24,8 +24,8 @@ TR simple () {
 
         for (int i = 0; i < n; i++) {
             if ( (c & (1 << i)) > 0) {
-                p *= a[n-i-1];
-                m = min (a[n-i-1], m);
+                p *= a[i];
+                m = min (a[i], m);
             }
         }
 
