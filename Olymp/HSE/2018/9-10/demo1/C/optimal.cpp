@@ -2,21 +2,22 @@
 using namespace std;
 
 int main() {
-    int n, m, s = 0, l, q,g = 0;
+    int n, m, s = 0, w = 1, q;
     char c;
     cin >> n >> m;
 
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < m; j++) {
             cin >> c;
-            if (c =='.' && g == 1)
-                s+=1;
-            else
-                g = !g;
+            if (c == '.') {
+                s += !w;
+                else {
+                    w = !w;
+                    q++;
+                }
+            }
 
+
+            cout << s + q / 2;
+            return 0;
         }
-    }
-
-    cout << s;
-    return 0;
-}
