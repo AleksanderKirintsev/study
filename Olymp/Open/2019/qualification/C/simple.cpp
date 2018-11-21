@@ -4,8 +4,7 @@ using namespace std;
 #define F first
 #define S second
 int main(){
-    freopen("tests/01","r",stdin);
-    int n,p,k,m,sum = 0;
+    long long int n,p,k,m,sum = 0;
     cin >> n >> p >> k;
     pair<int,int> a[n];
 
@@ -28,6 +27,6 @@ int main(){
 
     for (int i = 0; i < n; i++)
         sum+=a[i].F;
-    cout << sum + p/k;
+    cout << sum + p / k;
     return 0;
 }
