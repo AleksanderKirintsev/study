@@ -2,12 +2,10 @@
 using namespace std;
 
 int main() {
-//    cin.tie(0);
-//    cin.sync_with_stdio(0);
-//    cout.tie(0);
-    int u[500000];
-    u[499999] = 123;
-    cout << u[499999];
+    cin.tie(0);
+    cin.sync_with_stdio(0);
+    cout.tie(0);
+
     int n,q,l,r;
     cin >> n >> q;
 
