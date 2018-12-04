@@ -16,7 +16,7 @@ int main() {
     for(int i = 0; i < q; i++) {
         char c;
         int l,r;
-1
+
         cin >> c >> l >> r;
 
         if(c == '?') {
