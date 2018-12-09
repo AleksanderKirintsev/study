@@ -2,7 +2,7 @@
 #include <bitset>
 using namespace std;
 
-int n,q,a[500001];
+unsigned int n,q,a[500001];
 
 int main() {
     cin.tie(0);
@@ -10,7 +10,7 @@ int main() {
     cout.tie(0);
 
     cin >> n >> q;
-    for (int i = 1; i < n + 1; i++)
+    for (int i = 1; i < n+1; i++)
         cin >> a[i];
 
     for(int i = 0; i < q; i++) {
@@ -20,12 +20,16 @@ int main() {
         cin >> c >> l >> r;
 
         if(c == '?') {
-            long long b[7813] = {0};
-            for(int j = l; j <= r; j++)
-                b[a[j]/64] |= (1 << a[j] % 64);
+            unsigned long long int b[2] = {0};
+            for(int j = l; j <= r; j++) {
+                b[a[j]/64] |= ((unsigned long long)(1 << a[j] % 64));
+                printf("%2d %2d ",j,a[j]);
+                cout << bitset<sizeof (long long)* 8>(*(long long int*)(&b[0])) << " " << b[0] <<endl;
+            }
+
 
             int j;
-            for(j = 0; b[j] == (1 << 64) - 1;)
+            for(j = 0; b[j] == (1<<64);)
                 j++;
 
             for (int d = 0; d < 64; d++)

@@ -1,40 +1,38 @@
 #include <iostream>
 using namespace std;
+int n,q;
 
 int main() {
-    cin.tie(0);
-    cin.sync_with_stdio(0);
-    cout.tie(0);
+  //  cin.tie(0);
+  //  cin.sync_with_stdio(0);
+ //   cout.tie(0);
 
-    int n,q,l,r;
     cin >> n >> q;
 
     int a[n];
     for(int i = 0; i < n; i++)
         cin >> a[i];
 
-    for(int o = 0; o < q; o++) {
+    for(int d = 0; d < q; d++) {
         char c;
+        int l,r;
         cin >> c >> l >> r;
         l--;
-        r--;
+
         if(c =='!')
-            a[l] = r+1;
+            a[l] = r;
         else {
-            int s = 0;
-
-            for(int i = l; i <= r; i++) {
-
-                if (a[i] == s) {
-                    s++;
-                    i = l-1;
+            for(int i = 0; i < n; i++)
+                for(int j = l; j <= r; j++) {
+                    if( i == a[j] && j != r)
+                        break;
+                    else if(j == r) {
+                        cout << i << '\n';
+                        i = n;
+                    }
                 }
-                if (i == r) {
-                    cout << s << '\n';
-                    break;
-                }
-            }
         }
     }
     return 0;
 }
+
