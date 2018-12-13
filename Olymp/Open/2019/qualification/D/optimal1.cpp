@@ -1,36 +1,35 @@
 #include <iostream>
+#include <bitset>
 using namespace std;
-int n,q;
+
+int n,q,*a;
+
 int main() {
     cin.tie(0);
     cin.sync_with_stdio(0);
     cout.tie(0);
 
     cin >> n >> q;
-
-    int a[n];
-    for(int i = 0; i < n; i++)
+    a = new int[n];
+    for (int i = 0; i < n; i++)
         cin >> a[i];
 
-    for(int d = 0; d < q; d++) {
-        char c; int l,r;
+    for(int i = 0; i < q; i++) {
+        char c;int l,r;
         cin >> c >> l >> r;
         l--;
+        if(c == '?') {
+            bitset<500001> b;
+            for(int j = l; j < r; j++)
+                b[a[j]] = 1;
 
-        if(c == '!')
-            a[l] = r;
-        else {
-            int b[n+1] = {0};
-            for(int i = l; i < r; i++)
-                b[a[i]] = 1;
-
-            for(int i = 0; i <= n; i++)
-                if(b[i] == 0) {
-                    cout << i << '\n';
-                    break;
-                }
+            int j;
+            for(j = 0; b[j] == 1; j++);
+            cout << j << '\n';
         }
-    }
-    return 0;
+     else
+        a[l] = r;
+}
+return 0;
 }
 
