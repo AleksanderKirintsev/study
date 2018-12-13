@@ -27,7 +27,7 @@ int main() {
             int j;
             for(j = 0; b[j] == 1; j++);
 
-            cout << j << '\n';
+            cout << j <<'\n';
         }
      else
         a[l] = r;
