@@ -18,6 +18,7 @@ int main() {
         char c;int l,r;
         cin >> c >> l >> r;
         l--;
+
         if(c == '?') {
             bitset<500001> b;
             for(int j = l; j < r; j++)
@@ -25,6 +26,7 @@ int main() {
 
             int j;
             for(j = 0; b[j] == 1; j++);
+
             cout << j << '\n';
         }
      else
