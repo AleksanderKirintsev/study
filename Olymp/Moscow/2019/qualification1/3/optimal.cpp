@@ -3,12 +3,13 @@
 using namespace std;
 
 int main() {
-    //freopen("tests/**","r",stdin);
     int n,w;
     cin >> n;
     int a[n];
+
     for(int i = 0; i < n; i++)
         a[i] = i+1;
+
     for (int k = 2; k <=n; k*=2) {
         for (int j = 0; j < n/k; j++) {
             cin >> w;
@@ -17,9 +18,6 @@ int main() {
             else
                 a[j * 2] = 0;
 
-            /*        for(int i = 0; i < n / k; i++)
-                        cout << a[i] << " ";
-                    cout << endl;*/
         }
         int b[n/k],ind = 0;
         for(int i = 0; i < n; i++)
@@ -27,6 +25,7 @@ int main() {
                 b[ind] = a[i];
                 ind++;
             }
+
         for (int i = 0; i < n; i++)
             a[i] = 0;
 
