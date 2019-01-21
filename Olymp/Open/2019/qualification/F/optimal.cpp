@@ -1,38 +1,68 @@
 #include <iostream>
+#include <bitset>
+#include <map>
+#include <algorithm>
 using namespace std;
+#define X first
+#define Y second
+const int NLIM = 1e6;
+int n;
+int *a,*b;
 
-int n,a[1000000],b[1000000];
+bool optimal() {
+    map<int,int> m;
+    bitset<NLIM> bs;
+    bs.set();
+    int *d = new int[n];
+    for(int i = bs._Find_first(); i < n; i = bs._Find_first()) {
+        int ind = -1;
+        int q = 0;
+        d[q++] = i;
+        ind = (a[i] == b[i] ? 0 : ind);
+        bs[i] = 0;
+        for(int j = a[i]; j != i; d[q++] = j,j = a[j]) {
+            ind = (j == b[i] ? q : ind);
+            bs[j] = 0;
+        }
 
-int num(int l,int k) {
-    int i,j;
-    for (i = a[l],j = 1; j < k; j++)
-        i = a[i-1];
-    return i;
+        if(ind == -1)
+            return 0;
+
+        pair<int,int> pr[q];
+        for(int j = 0; j < q; j++) {
+            pr[j].X = d[j];
+            pr[j].Y = d[(j + ind) % q];
+        }
+
+        sort(pr.begin(),pr.end());
+        for(int j = 0; j < q; j++)
+            if(px[j].Y != b[px[j].X])
+                return 0;
+        if(m[q] == 0 || m[q] == ind+1)
+            m[q] == ind+1;
+        else
+            return 0;
+        for(int j = 0; j < q; j++)
+            cout << d[j] << " ";
+        cout << endl;
+    }
+    for(auto i : m)
+
+    return 1;
 }
 
 int main() {
-    int n,k = 1;
+    freopen("tests/08","r",stdin);
     cin >> n;
 
-    for (int i = 0; i < n; i++)
+    a = new int[n];
+    for (int i = 0; i < n; a[i++]--)
         cin >> a[i];
-    for (int i = 0; i < n; i++)
+
+    b = new int[n];
+    for (int i = 0; i < n; b[i++]--)
         cin >> b[i];
 
-    for (int i = a[0]; i != b[0] && k <= n+1; k++)
-        i = a[i-1];
-
-    if(k == n + 2) {
-        cout << "No";
-        return 0;
-    }
-
-    for ( int i = 1; i < n; i++)
-        if (num(i,k) != b[i]) {
-            cout << "No";
-            return 0;
-        }
-
-    cout << "Yes";
+    cout << (optimal() ? "Yes" : "No");
     return 0;
 }
