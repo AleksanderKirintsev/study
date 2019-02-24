@@ -5,7 +5,7 @@
 using namespace std;
 int n,k,a[1000010];
 int main(){
-	freopen("tests/100","r",stdin);
+	//freopen("tests/100","r",stdin);
     cin.tie(0);
     cin.sync_with_stdio(0);
     cout.tie(0);
