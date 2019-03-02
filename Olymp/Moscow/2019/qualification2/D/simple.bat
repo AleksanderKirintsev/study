@@ -3,7 +3,7 @@
 g++ -std=c++11 %~n0.cpp -o %~n0.exe
 set dst=tests
 
-FOR %%i IN (%dst%\*.a) DO (
+FOR %%i IN (%dst%\0*.a) DO (
 %~n0.exe < %dst%\%%~ni > %dst%\%%~ni.out
 fc /a %dst%\%%~ni.a %dst%\%%~ni.out 
 )
