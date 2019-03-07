@@ -11,8 +11,8 @@ int main(){
     for (int i = 0; i < n; i++)
         cin >> a[i];
 
+    int *b= new int[k];
     for (int i = 0; i < n - k + 1; i++){
-        int b[k];
         memcpy(b,a+i,k*sizeof(int));
         sort(b,b+k);
         cout << b[k/2] << " ";
