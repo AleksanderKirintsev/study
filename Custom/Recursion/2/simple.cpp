@@ -1,22 +1,20 @@
 #include <iostream>
 
 using namespace std;
-int n;
-int stairs(int a,int plevel){
-  if (a == 0)
-    return 1;
 
-  int ans = 0;
-  for (int level = 1; level < plevel; ++level) {
-    if ((a - level) < 0)
-      break;
-    ans += stairs(a-level,level);
-  }
-  return ans;
+int f(int n,int k) {
+    if (n == 0)
+        return 1;
+
+    int sum = 0;
+    for(int i = n; i > n/2; --i)
+        sum += f(n-i,i-1);
+
+    return sum;
 }
 int main() {
-
+    int n;
     cin >> n;
-    cout << stairs(n,n+1);
+    cout << f(n,n+1);
     return 0;
 }
