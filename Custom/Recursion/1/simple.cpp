@@ -2,18 +2,18 @@
 
 using namespace std;
 
-void f(int i) {
-    if (i > 0) {
-        int n;
-        cin >> n;
-        f(i-1);
-        cout << n << " ";
-    }
+void f(int n) {
+    int x;
+    cin >> x;
+    if (n != 1)
+        f(n-1);
+    cout << x << " ";
+
 }
 int main() {
-    int q;
-    cin >> q;
-    f(q);
+    int n;
+    cin >> n;
+    f(n);
 
     return 0;
 }

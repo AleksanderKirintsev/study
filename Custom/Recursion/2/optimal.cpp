@@ -5,12 +5,11 @@ using namespace std;
 int f(int n,int k) {
     if (n == 0)
         return 1;
-    else if(k == 0)
-        return 0;
 
     int sum = 0;
-    for(int i = k; i > 0; --i)
-        sum += f(n-i,i-1);
+    for(int i = 1; i < k; ++i)
+        if(n-i >=0)
+            sum += f(n-i,i);
 
     return sum;
 }
@@ -20,3 +19,4 @@ int main() {
     cout << f(n,n+1);
     return 0;
 }
+
