@@ -9,7 +9,7 @@ int f(int n,int k) {
         return 0;
 
     int sum = 0;
-    for(int i = k; i > 0; --i)
+    for(int i = min(n,k); i > 0; --i)
         sum += f(n-i,i-1);
 
     return sum;
@@ -17,6 +17,6 @@ int f(int n,int k) {
 int main() {
     int n;
     cin >> n;
-    cout << f(n,n+1);
+    cout << f(n,n);
     return 0;
 }
