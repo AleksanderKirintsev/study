@@ -1,22 +1,17 @@
 #include <iostream>
-
 using namespace std;
 
 int f(int n,int k) {
-    if (n == 0)
-        return 1;
-
-    int sum = 0;
-    for(int i = 1; i < k; ++i)
-        if(n - i >=0)
-            sum += f(n-i,i);
-
+    int sum = (n <= k) ? 1 : 0;
+    for(int i = min(n,k) - (n <= k); n-i <= (i*i-i)/2; --i)
+            sum += f(n-i,i-1);
     return sum;
 }
 int main() {
+    //freopen("tests//02","r",stdin);
     int n;
     cin >> n;
-    cout << f(n,n+1);
+    cout << f(n,n);
     return 0;
 }
 
