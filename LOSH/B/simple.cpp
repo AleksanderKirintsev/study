@@ -5,11 +5,11 @@ struct quad {
     int x,y,x1,y1;
 };
 quad f(quad c) {
-    if(c.x1 > c.x && c.y1 < c.y) {
+    if(c.x1 >= c.x && c.y1 < c.y) {
         swap(c.y1,c.y);
         return c;
     }
-    if(c.x > c.x1 && c.y < c.y1) {
+    if(c.x > c.x1 && c.y <= c.y1) {
         swap(c.x1,c.x);
         return c;
     }
@@ -22,7 +22,9 @@ quad f(quad c) {
 }
 
 bool Q(quad a,quad b) {
-    return ((a.x <= b.x1 && a.x1 >= b.x) || (a.y <= b.y1 && a.y1 >= b.y));
+    bool A = (a.x <= b.x1 && a.x1 >= b.x && a.y <= b.y1 && a.y1 >= b.y);
+
+    return (A);
 }
 int main() {
     quad a,b;
