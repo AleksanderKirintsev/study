@@ -22,7 +22,7 @@ int f(int x,int y){
 }
 
 int main() {
-    freopen("tests//00","r",stdin);
+    //freopen("tests//00","r",stdin);
     cin >> n >> x0 >> y0 >> x1 >> y1;
     x0 += 2;
     y0 += 2;
