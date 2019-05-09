@@ -2,30 +2,43 @@
 using namespace std;
 
 int m,n,k,*a,*w;
-int moves[4][2] {{-1,0},{0,1},{1,0},{0,-1}};
+int *moves;
 
-bool f(int x,int y) {
-    if (a[x*(m+2) + y] != 0)
+void print(){
+    for(int x = 0; x < n+2; x++) {
+        for(int y = 0; y < m+2; y++)
+            printf("%3d", a[x*(m+2)+y]);
+        cout << "\n";
+    }
+    cout << "\n";
+}
+
+bool f(int x) {
+    if (a[x] != 0)
         return 0;
-    if (x*(m+2) + y == n*(m+2)+m)
+    if (x == n*(m+2)+m)
         return 1;
 
-    a[x*(m+2) + y] = -1;
+    a[x] = -1;
     int q = 0;
     for(int i = 0; i < 4; i++)
-        q += f(x+moves[i][0],y+moves[i][1]);
-    a[x*(m+2) + y] = 0;
+        if (q = f(x+moves[i])){
+            print();
+            break;
+        }
+    a[x] = 0;
     return q;
 }
 
 int main() {
-    freopen("tests/00","r",stdin);
+    //freopen("tests/10","r",stdin);
     cin >> n >> m >> k;
     a = new int[(m+2)*(n+2)] {0};
     w = new int[k];
+    moves = new int[4] {-m-2,1,-1,m+2};
+
     for(int x, y, i = 0; i < k; i++) {
         cin >> x >> y;
-
         a[w[i] = x*(m+2)+y] = i+1;
     }
 
@@ -34,17 +47,18 @@ int main() {
     for(int y = 0; y < m+2; y++)
         a[y] = a[(m+2)*(n+1)+y] = k + 1;
 
+
+    print();
     int ans = k;
-    for (int i = k-1; i >= 0; i--) {
-        a[w[i]] = 0;
-        if (f(1,1))
-            break;
-        ans--;
-    }
-//    for(int x = 0; x < n+2; x++) {
-//        for(int y = 0; y < m+2; y++)
-//            printf("%3d", a[x*(m+2)+y]);
-//        cout << "\n";}
+    if (!f(m+3)) {
+        do {
+            ans--;
+            a[w[ans]] = 0;
+        } while(!f(m+3));
+        ans++;
+    } else
+        ans = 0;
+
     cout << ans;
     return 0;
 }

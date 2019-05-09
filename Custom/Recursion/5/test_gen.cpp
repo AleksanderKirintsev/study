@@ -11,13 +11,13 @@ int main(int argc, char* argv[]) {
 
     int *a = new int[n*n] {0};
     pair<int,int> *b = new pair<int,int>[k];
-    srand ( time ( NULL ) );
+    srand ( time ( NULL )* stoi(argv[3]));
     for(int i = 0; i < k; i++){
         int j = rand() % (n*n);
         while(a[j] != 0)
             j = (j+1) % (n*n);
         a[j] = i+1;
-        b[i] = {j / n,j % n};
+        b[i] = {j / n + 1,j % n + 1};
     }
 
     char* buffer = new char[3];
