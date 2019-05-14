@@ -20,14 +20,14 @@ int main(int argc, char* argv[]) {
         b[i] = {j / n + 1,j % n + 1};
     }
 
-    char* buffer = new char[3];
-    for (int i = 0; i < n; i++){
-        for (int j = 0; j < n; j++){
-            sprintf(buffer,"%3d",a[i*n+j]);
-            cout << buffer;
-            }
-        cout << "\n";
-    }
+//    char* buffer = new char[3];
+//    for (int i = 0; i < n; i++){
+//        for (int j = 0; j < n; j++){
+//            sprintf(buffer,"%3d",a[i*n+j]);
+//            cout << buffer;
+//            }
+//        cout << "\n";
+//    }
 
     cout << n << " " << n << " " << k << "\n";
     for(int i = 0; i < k; i++)

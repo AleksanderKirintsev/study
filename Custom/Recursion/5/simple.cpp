@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-int m,n,k,*a,*w;
+int m,n,k,*a,*w,ans;
 int *moves;
 
 void print(){
@@ -14,24 +14,25 @@ void print(){
 }
 
 bool f(int x) {
-    if (a[x] != 0)
+    if (a[x] != 0 || a[(n+1)*(m+2)- 2])
         return 0;
     if (x == n*(m+2)+m)
         return 1;
 
     a[x] = -1;
     int q = 0;
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < 4; i++){
+            if(ans == 12) print();
         if (q = f(x+moves[i])){
-            print();
             break;
         }
+    }
     a[x] = 0;
     return q;
 }
 
 int main() {
-    //freopen("tests/10","r",stdin);
+    //freopen("tests/12","r",stdin);
     cin >> n >> m >> k;
     a = new int[(m+2)*(n+2)] {0};
     w = new int[k];
@@ -48,8 +49,8 @@ int main() {
         a[y] = a[(m+2)*(n+1)+y] = k + 1;
 
 
-    print();
-    int ans = k;
+    //print();
+    ans = k;
     if (!f(m+3)) {
         do {
             ans--;
