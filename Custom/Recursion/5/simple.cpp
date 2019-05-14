@@ -22,7 +22,7 @@ bool f(int x) {
     a[x] = -1;
     int q = 0;
     for(int i = 0; i < 4; i++){
-            if(ans == 12) print();
+        //print();
         if (q = f(x+moves[i])){
             break;
         }
