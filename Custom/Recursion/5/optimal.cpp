@@ -29,7 +29,7 @@ bool is_connected(int x,int y,int mw) {
 }
 
 int main() {
-    //freopen("tests/12","r",stdin);
+//    freopen("tests/10","r",stdin);
     cin >> n >> m >> k;
     a = new int[(m+2)*(n+2)] {0};
     w = new int[k];
@@ -46,7 +46,7 @@ int main() {
         a[y] = a[(m+2)*(n+1)+y] = k + 1;
 
 
-//    print();
+    //print();
     int x = m+3, y = (n+1)*(m+2)-2;
     int l = 0, r = k;
     if (!is_connected(x,y,0)) {
@@ -58,7 +58,7 @@ int main() {
                 l = mw;
         }
     } else
-        l = 0;
+        l = k;
 
     cout << k - l;
     return 0;
