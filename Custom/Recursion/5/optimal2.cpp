@@ -6,7 +6,7 @@ using namespace std;
 
 int m,n,k,idx = -1,*a,*w;
 int *moves;
-map<char,set<int> > mp;
+map<int,set<int>> mp;
 
 void print() {
     for(int x = 0; x < n+2; x++) {
@@ -16,60 +16,29 @@ void print() {
     }
     cout << "\n";
 }
-void add(set<int> &s1, set<int> &s2,int i) {
-    for(auto x : s2) {
-        s1.insert(x);
-        a[x] = i;
-    }
-    s2.clear();
 
-}
-void check_point(int x1) {
-    set<int> sets;
-    for(int i = 0; i < 4; i++) {
-        int x = x1+moves[i];
-        if (a[x] < 0)
-            sets.insert(abs(a[x]));
-    }
-    if(sets.empty()) {
-        mp[idx--].insert(x1);
-    } else {
-        set<int>::iterator it = sets.begin();
-        it++;
-        for(; it != sets.end(); it++)
-            add(mp[-(*sets.begin())],mp[-(*it)],-(*sets.begin()));
-        mp[-(*sets.begin())].insert(x1);
-        sets.clear();
-    }
-}
+void process_adjacent(int x0) {
+    int am = -mp.size()-1;
+    for(int i = 0; i < 4; i++)
+        if (a[x0+moves[i]] < 0)
+            am = max(am, a[x0+moves[i]]);
 
-void wave() {
-    set<int> sets;
-    for(int x = 1; x < n + 2; x++)
-        for(int y = 1; y < m + 2; y++)
-            if(a[x*(n+2)+y] == 0) {
-                for(int i = 0; i < 4; i++) {
-                    int x1 = x*(n+2)+y+moves[i];
-                    if (a[x1] < 0)
-                        sets.insert(abs(a[x1]));
-                }
-                if(sets.empty()) {
-                    mp[idx--].insert(x*(n+2)+y);
-                } else {
-                    set<int>::iterator it = sets.begin();
-                    it++;
-                    for(; it != sets.end(); it++)
-                        add(mp[-(*sets.begin())],mp[-(*it)],-(*sets.begin()));
-                    mp[-(*sets.begin())].insert(x*(n+2)+y);
-                    sets.clear();
-                }
-            print();
-            }
+    mp[am].insert(x0);
+    a[x0] = am;
+
+    for(int i = 0, x = x0 + moves[i]; i < 4; x = x0 + moves[++i])
+        if (a[x] < am){
+            mp[am].insert(mp[a[x]].begin(), mp[a[x]].end());
+            int del = a[x];
+            for(auto it:mp[a[x]])
+                a[it] = am;
+            mp[del].clear();
+        }
 
 }
 
 int main() {
-    freopen("tests/00","r",stdin);
+    //freopen("tests/10","r",stdin);
     cin >> n >> m >> k;
     a = new int[(m+2)*(n+2)] {0};
     w = new int[k];
@@ -85,19 +54,29 @@ int main() {
     for(int y = 0; y < m+2; y++)
         a[y] = a[(m+2)*(n+1)+y] = k + 1;
 
+    //print();
 
-    int ans = k;
-    for(; ans > (a[m+3] == 0 ? k : (a[(n+1)*(m+1)-2] == 0 ? a[m+3] : min(a[m+3],a[(n+1)*(m+1)-2]))) ; ans--) {
+    int s = a[m+3],f = a[(n+1)*(m+2)-2];
+    int ans = min(s,f) ? min(s,f)-1 : (max(s,f) ? max(s,f)-1 : k);
+    for(int i = k; i > ans && ans != k; i--)
+        a[w[i-1]] = 0;
+
+    //print();
+
+    for(int x = 1; x < n+2; x++)
+        for(int y = 1; y < m+2; y++)
+            if (a[x*(m+2)+y] == 0)
+                process_adjacent(x*(m+2)+y);
+
+
+    for(; ans > 1 && a[(n+1)*(m+2)-2] != -1; ans--) {
+        //print();
         a[w[ans-1]] = 0;
+        process_adjacent(w[ans-1]);
+
     }
-    a[m+3] = -1;
-    wave();
-    print();
-    for(; ans >= 1 && a[(n+1)*(m+2)-2] != -1; ans--) {
-        a[w[ans-1]] = 0;
-        check_point(w[ans-1]);
-    }
-    cout << ans;
+
+    cout << (ans == k ? 0 : ans + 1);
 
     return 0;
 }
