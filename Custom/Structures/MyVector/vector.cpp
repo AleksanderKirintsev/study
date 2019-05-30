@@ -1,45 +1,62 @@
 #include <iostream>
 #include <cstring>
+#include <vector>
 using namespace std;
 
 struct MyVector {
     int *a;
     int capacity;
-    int size;
+    int length;
+
 
     MyVector() {
         capacity = 2;
         a = new int[capacity];
-        size = 0;
+        length = 0;
+    }
+
+    MyVector(int capacity) {
+        this->capacity = capacity;
+        a = new int[this->capacity] {};
+        length = this->capacity;
     }
 
     void push_back(int value) {
-        if(size == capacity) {
+        if(length == capacity) {
             capacity *= 2;
             int *b = new int[capacity];
-            memcpy(b,a,size * sizeof(int));
+            memcpy(b,a,length * sizeof(int));
             delete a;
             a = b;
         }
-        a[size++] = value;
+        a[length++] = value;
+    }
+    int size(){
+    return length;
     }
 
-    void change(int index, int value) {
-        a[index] = value;
-    }
-
-    int get_value(int index) {
+    int operator[](int index) {
         return a[index];
+    }
+
+    MyVector& operator= (const MyVector& value) {
+        for(int i = 0; i < this->capacity; i++)
+            a[i] = value.a[i];
+        return *this;
     }
 };
 int main() {
-    MyVector v;
-    v.push_back(1);
-    v.push_back(2);
-    v.push_back(3);
-    v.change(1,5);
-    for(int i = 0; i < 3; i++)
-        cout << v.get_value(i) << " ";
+    MyVector vec;
+    vector<int> vect(1);
+    vec.push_back(1);
+    vec.push_back(2);
+    vec.push_back(3);
+    //vec[0] = 5;
+    for(int i = 0; i < vec.size(); i++)
+        cout << vec[i];
+//    for(vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+//        cout << *it;
+
     return 0;
 }
 
