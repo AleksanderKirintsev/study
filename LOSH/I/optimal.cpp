@@ -10,8 +10,8 @@ int n,h,v,*a,moves[2][6];
 map<int,set<int>> mp;
 
 void print() {
-    for(int x = 0; x < h+2; x++) {
-        for(int y = 0; y < v+2; y++)
+    for(int x = 1; x <= h; x++) {
+        for(int y = 1; y <= v; y++)
             printf("%3d", a[x*(v+2)+y]);
         printf("\n");
     }
@@ -41,7 +41,7 @@ inline void process_adjacent(int x0) {
 }
 
 int main(){
-    //freopen("tests/01","r",stdin);
+    //freopen("tests/14","r",stdin);
     cin >> n >> h >> v;
     a = new int[(h+2)*(v+2)]{};
     moves[0][0] = -v-2; moves[0][1] = -v-1; moves[0][2] = 1; moves[0][3] = v+3; moves[0][4] = v+2; moves[0][5] = -1;
@@ -67,8 +67,10 @@ int main(){
                 process_adjacent(x*(v+2)+y);
 
     vector<int> ss;
-    for(int i = 1; i < mp.size(); i++)
-        ss.push_back(mp[i].size());
+    for(auto x : mp)
+        if (x.second.size())
+            ss.push_back(x.second.size());
+
     sort(ss.rbegin(),ss.rend());
 
     int ans = 0;
