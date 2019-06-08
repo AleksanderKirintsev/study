@@ -40,44 +40,38 @@ struct MyVector {
         return a[index];
     }
 
-    MyVector& operator=(MyVector& vec) {
-        this->length = vec.size();
-        while(length > capacity) {
-            capacity *= 2;
-            int *b = new int[capacity];
-            memcpy(b,a,length * sizeof(int));
-            delete a;
-            a = b;
+
+    struct Iterator{
+        int *it;
+        Iterator(int* first){
+            it = first;
         }
 
-        for(int i = 0; i < length; i++)
-            a[i] = vec[i];
+        int operator+ (int n) {return *(it+n);}
+        int operator- (int n) {return *(it-n);}
 
-        return *this;
-    }
+        int operator++ (int) {return *it++;}
+        int operator-- (int) {return *it--;}
+        int operator++ () {return *++it;}
+        int operator-- () {return *--it;}
 
+        bool operator!= (const Iterator& iter) { return it != iter.it;}
+        bool operator== (const Iterator& iter) { return it == iter.it;}
+        int operator* () {return *it;}
+    };
+    Iterator begin(){return a;}
+    Iterator end(){return a+length;}
 
 };
 int main() {
-    MyVector vec,vec1(4);
-
+    MyVector vec;
     vec.push_back(1);
     vec.push_back(2);
     vec.push_back(3);
+    vec[0] = 5;
 
-    vec[0] = 1;vec[1] = 2;vec[2] = 3;
-    vec1[0] = 4;vec1[1] = 5;vec1[2] = 6;vec1[3]=7;
-
-    vec = vec1;
-    vec[0] = 3;
-
-    for(int i = 0; i < vec.size(); i++)
-        cout << vec[i];
-    cout << endl;
-    for(int i = 0; i < vec1.size(); i++)
-        cout << vec1[i];
-//    for(MyVector::iterator it = vec.begin(); it != vec.end(); it++)
-//        cout << *it;
+    for(MyVector::Iterator it = vec.begin(); it != vec.end(); it++)
+            cout << *it;
 
     return 0;
 }
