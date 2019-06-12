@@ -33,7 +33,6 @@ template<typename T> struct vector {
 
     T& operator[](int index) {return a[index];}
 
-
     struct Iterator{
         T *it;
         Iterator(T* first){it = first;}
@@ -48,7 +47,7 @@ template<typename T> struct vector {
 };
 
 int main() {
-    vector<char> v;
+    vector<double> v;
     v.push_back(1);
     v.push_back(2);
     v.push_back(3.5);
