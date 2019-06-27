@@ -1,81 +1,64 @@
 #include <iostream>
-#include <set>
-#include <map>
+#include <deque>
 #include <vector>
 #include <algorithm>
 using namespace std;
 
-int n,h,v,*a,moves[2][6];
+#define P make_pair
+#define X first
+#define Y second
 
-map<int,set<int>> mp;
+int n,h,v;
+vector<vector<int>> a;
+deque<pair<int,int>> q;
+pair<int,int> moves[2][6]= {{P(-1,0),P(-1,1),P(0,1),P(1,1),P(1,0),P(0,-1)},{P(-1,-1),P(-1,0),P(0,1),P(1,0),P(1,-1),P(0,-1)}};
 
-void print() {
-    for(int x = 1; x <= h; x++) {
-        for(int y = 1; y <= v; y++)
-            printf("%3d", a[x*(v+2)+y]);
-        printf("\n");
-    }
-    printf("\n");
-}
+int V(){
+    int sum = 0;
+    pair<int,int> p;
+    while(!q.empty()){
+        p = q.front();
+        q.pop_front();
+        a[p.X][p.Y] = 1;
+        sum++;
 
-inline void process_adjacent(int x0) {
-    int am = mp.size()+1;
-    for(int i = 0; i < 6; i++){
-        int x = ((x0 / (v+2)) % 2 == 0 ? x0 + moves[0][i] : x0 + moves[1][i]);
-        if (a[x] > 0)
-            am = min(am, a[x]);
+        for(int i = 0; i < 6; i++){
+            int x = p.X+moves[p.X%2][i].X;
+            int y = p.Y+moves[p.X%2][i].Y;
+            if(a[x][y] == 0){
+                a[x][y] = 1;
+                q.push_back({x,y});
             }
-
-    mp[am].insert(x0);
-    a[x0] = am;
-
-    for(int i = 0; i < 6; i++) {
-        int x = (x0 / (v+2) % 2 ? x0 + moves[0][i] : x0 + moves[1][i]), y = a[x];
-        if (y > am){
-            mp[am].insert(mp[y].begin(), mp[y].end());
-            for(auto it:mp[y])
-                a[it] = am;
-            mp[y].clear();
         }
     }
+    return sum;
 }
 
 int main(){
     //freopen("tests/14","r",stdin);
     cin >> n >> h >> v;
-    a = new int[(h+2)*(v+2)]{};
-    moves[0][0] = -v-2; moves[0][1] = -v-1; moves[0][2] = 1; moves[0][3] = v+3; moves[0][4] = v+2; moves[0][5] = -1;
-    moves[1][0] = -v-3; moves[1][1] = -v-2; moves[1][2] = 1; moves[1][3] = v+2; moves[1][4] = v+1; moves[1][5] = -1;
-    //{{ -v-2, -v-1, 1, v+3, v+2, -1 }, { -v-3, -v-2, 1, v+2, v+1, -1 }};
+    a.resize(h+2,vector<int>(v+2,1));
 
-    for(int x = 1;x < h + 1; x++)
-        for(int y = 1;y < v + 1; y++){
+    for(int x = 1; x <= h; x++)
+        for(int y = 1; y <= v; y++){
             char c;
             cin >> c;
-            if(c == '#')
-                a[x*(v+2)+y] = -1;
+            if(c =='.')
+                a[x][y] = 0;
         }
 
-    for(int x = 0; x < h+2; x++)
-        a[x*(v+2)] = a[x*(v+2)+v+1] = -1;
-    for(int y = 0; y < v+2; y++)
-        a[y] = a[(v+2)*(h+1)+y] = -1;
-
-    for(int x = 1;x < h + 2; x++)
-        for(int y = 1;y < v + 2; y++)
-            if(a[x*(v+2)+y] == 0)
-                process_adjacent(x*(v+2)+y);
-
-    vector<int> ss;
-    for(auto x : mp)
-        if (x.second.size())
-            ss.push_back(x.second.size());
-
-    sort(ss.rbegin(),ss.rend());
+    vector<int> volumes;
+    for(int x = 1; x <= h; x++)
+        for(int y = 1; y <= v; y++)
+            if(a[x][y] == 0){
+                q.push_back({x,y});
+                volumes.push_back(V());
+            }
 
     int ans = 0;
-    for(int i = 0; i < ss.size() && n > 0; i++,ans++)
-        n -=ss[i];
+    sort(volumes.rbegin(),volumes.rend());
+    for(int i = 0; i < int(volumes.size()) && n > 0; i++,ans++)
+        n -= volumes[i];
 
     cout << ans;
     return 0;
