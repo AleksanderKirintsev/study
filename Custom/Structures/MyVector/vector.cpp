@@ -33,16 +33,16 @@ template<typename T> struct vector {
 
     T& operator[](int index) {return a[index];}
 
-    struct Iterator{
+    struct iterator{
         T *it;
-        Iterator(T* first){it = first;}
+        iterator(T* first){it = first;}
 
-        Iterator operator++ () {return ++it;}
+        iterator operator++ () {return ++it;}
         T operator* () {return *it;}
-        bool operator!= (const Iterator& iter) {return it != iter.it;}
+        bool operator!= (const iterator& iter) {return it != iter.it;}
     };
-    Iterator begin(){return a;}
-    Iterator end(){return a+length;}
+    iterator begin(){return a;}
+    iterator end(){return a+length;}
 
 };
 
