@@ -7,9 +7,7 @@ template<typename T> struct vector {
     int capacity;
     int length;
 
-    vector() {
-        capacity = 2;
-        a = new T[capacity];
+    vector():vector(2) {
         length = 0;
     }
 
