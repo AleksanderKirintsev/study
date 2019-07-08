@@ -1,32 +1,22 @@
 #include <iostream>
 #include <algorithm>
+#include <cstring>
 using namespace std;
 int n,k,*a,*b;
 
-int del(int c){
-    int l = 0,r = k;
-    while(l+1 < r){
+int find_place(int num) {
+    int l = 0, r = k;
+    while(l+1 < r) {
         int mid = (l+r)/2;
-        if(b[mid] > c)
-            r = mid;
-        else
+        if(b[mid] <= num)
             l = mid;
+        else
+            r = mid;
     }
 
-    b[l] = 0;
     return l;
 }
-void add(int c,int idx){
-    b[idx] = c;
-    while(b[idx] < b[idx-1] && idx > 0){
-        swap(b[idx],b[idx-1]);
-        idx--;
-    }
-    while(b[idx] > b[idx+1] && idx < k-1){
-        swap(b[idx],b[idx+1]);
-        idx++;
-    }
-}
+
 int main() {
     //freopen("tests/00","r",stdin);
     cin.tie(0);
@@ -38,20 +28,30 @@ int main() {
     a = new int[n];
     b = new int[k];
 
-
     for(int i = 0; i < n; i++)
         cin >> a[i];
-
-    for(int i = 0; i < k; i++)
-        b[i] = a[i];
-
+//    for(int i = 0; i < k; i++)
+//        b[i] = a[i];
+    memcpy(b,a,sizeof(int)*k);
     sort(b,b+k);
 
-    for(int i = k; i < n; i++){
+    for(int i = k; i < n; i++) {
         cout << b[k/2] << " ";
-        int idx = del(a[i-k]);
-        add(a[i],idx);
+
+        int del_idx = find_place(a[i-k]), ins_idx = find_place(a[i]);
+        if(del_idx > ins_idx) {
+            del_idx += -1;
+            memcpy(b+ins_idx+1,b+ins_idx,sizeof(int)*(del_idx-ins_idx+1));
+            ins_idx+=(b[ins_idx] < a[i]);
+        }else if(del_idx < ins_idx) {
+            del_idx += 1;
+            memcpy(b+del_idx-1,b+del_idx,sizeof(int)*(ins_idx-del_idx+1));
+        }
+
+        b[ins_idx] = a[i];
+
     }
+
     cout << b[k/2] << " ";
     return 0;
 }
