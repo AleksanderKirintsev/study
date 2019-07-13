@@ -30,8 +30,7 @@ int main() {
 
     for(int i = 0; i < n; i++)
         cin >> a[i];
-//    for(int i = 0; i < k; i++)
-//        b[i] = a[i];
+
     memcpy(b,a,sizeof(int)*k);
     sort(b,b+k);
 
@@ -40,7 +39,7 @@ int main() {
 
         int del_idx = find_place(a[i-k]), ins_idx = find_place(a[i]);
         if(del_idx > ins_idx) {
-            del_idx += -1;
+            del_idx -= 1;
             memcpy(b+ins_idx+1,b+ins_idx,sizeof(int)*(del_idx-ins_idx+1));
             ins_idx+=(b[ins_idx] < a[i]);
         }else if(del_idx < ins_idx) {
