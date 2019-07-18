@@ -4,21 +4,8 @@
 using namespace std;
 int n,k,*a,*b;
 
-int find_place(int num) {
-    int l = 0, r = k;
-    while(l+1 < r) {
-        int mid = (l+r)/2;
-        if(b[mid] <= num)
-            l = mid;
-        else
-            r = mid;
-    }
-
-    return l;
-}
-
 int main() {
-    //freopen("tests/00","r",stdin);
+    //freopen("tests/01","r",stdin);
     cin.tie(0);
     cin.sync_with_stdio(0);
     cout.tie(0);
@@ -37,14 +24,13 @@ int main() {
     for(int i = k; i < n; i++) {
         cout << b[k/2] << " ";
 
-        int del_idx = find_place(a[i-k]), ins_idx = find_place(a[i]);
+        int del_idx = lower_bound(b,b+k,a[i-k])-b, ins_idx = lower_bound(b,b+k,a[i])-b-(a[i] > b[k-1]);
         if(del_idx > ins_idx) {
-            del_idx -= 1;
-            memcpy(b+ins_idx+1,b+ins_idx,sizeof(int)*(del_idx-ins_idx+1));
+            memcpy(b+ins_idx+1,b+ins_idx,sizeof(int)*(del_idx-ins_idx));
             ins_idx+=(b[ins_idx] < a[i]);
         }else if(del_idx < ins_idx) {
-            del_idx += 1;
-            memcpy(b+del_idx-1,b+del_idx,sizeof(int)*(ins_idx-del_idx+1));
+            memcpy(b+del_idx,b+del_idx+1,sizeof(int)*(ins_idx-del_idx));
+            ins_idx-=(b[ins_idx] > a[i]);
         }
 
         b[ins_idx] = a[i];
