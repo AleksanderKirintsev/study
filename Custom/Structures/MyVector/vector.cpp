@@ -26,7 +26,16 @@ template<typename T> struct vector {
         }
         a[length++] = value;
     }
-
+    void pop_back() {
+        length--;
+        if(length == capacity/4) {
+            capacity /= 4;
+            T *b = new T[capacity];
+            memcpy(b,a,length * sizeof(T));
+            delete a;
+            a = b;
+        }
+    }
     int size() {return length;}
 
     T& operator[](int index) {return a[index];}
@@ -45,11 +54,11 @@ template<typename T> struct vector {
 };
 
 int main() {
-    vector<double> v;
-    v.push_back(1);
-    v.push_back(2);
-    v.push_back(3.5);
-    v[0] = 5.6;
+    vector<int> v;
+    for(int i = 0; i < 9; i++)
+        v.push_back(i+1);
+    for(int i = 0; i < 7; i++)
+        v.pop_back();
 
     for(auto x:v)
         cout << x << " ";
