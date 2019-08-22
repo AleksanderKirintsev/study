@@ -1,93 +1,79 @@
 #include <iostream>
 #include <cstring>
+
 using namespace std;
 
 struct deque {
-    int *start,*stop;
-    int lb,lf,capacity_b,capacity_f;
-    int lim = 8/sizeof(int);
-    struct Node {int *a;Node *prev,*next;};
-    Node *head,*tail;
-
+    int *a,*h,*t,capacity = 1,length = 0;
     deque() {
-        head = new Node;tail = new Node;
-        head->next = tail; head->prev = NULL;
-        tail->next = NULL; tail->prev = head;
-        capacity_b = capacity_f = 2;
-        head->a=new int[capacity_f]; tail->a=new int[capacity_b];
-        start = head->a+capacity_f; stop = tail->a;
-        lf = lb = 0;
+        a = new int [capacity] {};
+        h = t = a;
     }
     void push_back(int value) {
-        if(capacity_b < lim && capacity_b == lb) {
-            capacity_b*=2;
-            int *b = new int[capacity_b];
-            memcpy(b,tail->a,sizeof(int) * lb);
-            delete tail->a;
-            tail->a = b;
-            stop = tail->a+lb;
-
-        } else if(lb % capacity_b == 0 && lb) {
-            tail->next = new Node;
-            tail->next->prev = tail;
-            tail = tail->next;
-            tail->a=new int[capacity_f];
-            stop = tail->a-1;
+        if(a+capacity <= t) {
+            capacity*=2;
+            int *b = new int[capacity]{};
+            memcpy(b,a,length*sizeof(int));
+            delete a;
+            a = b;
+            h = a;
+            t = a+length;
         }
-        stop++;
-        *stop = value;
-        lb++;
+        *t = value;
+        t++;
+        length++;
     }
     void push_front(int value) {
-        if(capacity_f < lim && capacity_f == lf) {
-            capacity_f*=2;
-            int *f = new int[capacity_f];
-            memcpy(f+lf,head->a,sizeof(int) * lf);
-            delete head->a;
-            head->a = f;
-            start = head->a+lf-1;
-        } else if(lf % capacity_f == 0 && lf) {
-            head->prev = new Node;
-            head->prev->next = head;
-            head = head->prev;
-            head->a=new int[capacity_f];
-            start = head->a+capacity_f;
+        if(a > h) {
+            capacity*=2;
+            int *b = new int[capacity]{};
+            memcpy(b+capacity/2,h,length*sizeof(int));
+            delete a;
+            a = b;
+            h = a+capacity/2;
+            t = h+length;
         }
-        start--;
-        *start = value;
-        lf++;
+        h--;
+        *h = value;
+        length++;
     }
-    void pop_back(){
-        if(stop == tail->a && lb){
-            tail = tail->prev;
-            delete tail->next->a;
-            delete tail->next;
-            stop = tail->a+capacity_b+1;
+    void pop_back() {
+        if(length == capacity/4){
+            capacity /= 4;
+            int *b = new int[capacity]{};
+            memcpy(b,h,length*sizeof(int));
+            delete a;
+            a = b;
+            h = a;
+            t = a+length;
         }
-        stop--;
-        lb--;
+        t--;
+        length--;
     }
-    void pop_front(){
-        if(start == head->a+capacity_f-1 && lf){
-            head = head->next;
-            delete head->prev->a;
-            delete head->prev;
-            start = head->a-1;
+    void pop_front() {
+        if(length == capacity/4){
+            capacity /= 4;
+            int *b = new int[capacity]{};
+            memcpy(b,h,length*sizeof(int));
+            delete a;
+            a = b;
+            h = a;
+            t = a+length;
         }
-        start++;
-        lf--;
+        h++;
+        length--;
     }
+    int front(){return *h;}
+    int back( ){return *t;}
+    int size( ){return length;}
+    int& operator[](int idx){return *(h+idx);}
 };
 
 int main() {
     deque dq;
-    dq.push_back(1);
-    dq.push_back(2);
-    dq.push_back(3);
-    dq.push_back(4);
-    dq.push_back(5);
-    dq.pop_front();
-    dq.pop_front();
-    dq.pop_front();
-    dq.pop_front();
+    for(int i = 1; i <= 20; i++)
+        dq.push_front(i);
+    for(int i = 1; i <= 19; i++)
+        dq.pop_front();
+    cout<< dq[0];
 }
