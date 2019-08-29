@@ -5,7 +5,7 @@ using namespace std;
 #define ll long long
 #define a(x,y) a[x*(m+2)+y]
 #define b(x,y) b[x*(m+2)+y]
-ll n,m,p,*a,*b;
+ll n,m,p,*a,*b,r,d;
 
 void transpose(){
     ll *tmp = new ll[(n+2)*(m+2)]{};
@@ -61,11 +61,10 @@ int main() {
         for(ll j = 1,t = 0; j <= m; j++)
             b(i,j) = (t+=a(i,j))+b((i-1),j);
 
-    ll ans = -1,r = 0;
+    ll ans = -1;
     for(int i = n; i >= 1; i--)
-        for(int j = 1; i-j >= r; j++){
+        for(int j = 1; j <= i; j++){
             ll sum = find_solution(i,j);
-            r = (sum > ans ? i-j : r);
             ans = max(ans,sum);
         }
 
