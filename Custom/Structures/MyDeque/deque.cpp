@@ -1,79 +1,96 @@
 #include <iostream>
 #include <cstring>
-
 using namespace std;
 
 struct deque {
-    int *a,*h,*t,capacity = 1,length = 0;
+    int **a,*head,*tail,*h,*t,length,length_h,length_t,capacity,capacity_h,capacity_t;
+    int lim = 8/sizeof(int);
+
     deque() {
-        a = new int [capacity] {};
-        h = t = a;
+        a = new int*[capacity = length = 2];
+        a[0] = new int[capacity_h = 2];
+        a[1] = new int[capacity_t = 2];
+        head = a[0];
+        tail = a[1];
+        h = a[0]+capacity-1;
+        t = a[1];
+        length_h = length_t = 0;
     }
     void push_back(int value) {
-        if(a+capacity <= t) {
-            capacity*=2;
-            int *b = new int[capacity]{};
-            memcpy(b,a,length*sizeof(int));
-            delete a;
-            a = b;
-            h = a;
-            t = a+length;
+        if(capacity_t < lim && capacity_t == length_t) {
+            capacity_t *=2;
+            int *b = new int[capacity_t];
+            memcpy(b,a[1],sizeof(int) * length_t);
+            delete a[1];
+            a[1] = b;
+            t = a[1]+length_t-1;
+        } else if(length_t % capacity_t == 0 && length_t) {
+            if((a+capacity-1) < tail){
+                capacity *= 2;
+                int **b = new int[capacity];
+                memcpy(b,a,sizeof(int*)*(length));
+                delete a;
+                a = b;
+                head = a;
+                tail = a+length-1;
+                h = head+(capacity_h - 1 - length_h%capacity_h);
+            }
+            tail++;
+            t = tail;
+            length++;
         }
         *t = value;
         t++;
-        length++;
+        length_t++;
     }
+
     void push_front(int value) {
-        if(a > h) {
-            capacity*=2;
-            int *b = new int[capacity]{};
-            memcpy(b+capacity/2,h,length*sizeof(int));
-            delete a;
-            a = b;
-            h = a+capacity/2;
-            t = h+length;
+        if(capacity_h < lim && capacity_h == length_h) {
+            capacity_h*=2;
+            int *b = new int[capacity_h];
+            memcpy(b+length_h,head[0],sizeof(int) * length_h);
+            delete head[0];
+            head[0] = b;
+            h = b+length_h-1;
+        } else if(length_h % capacity_h == 0 && length_h) {
+            head.push_back(new int[capacity_h]);
+            h = head[0]+capacity_h-1;
         }
-        h--;
         *h = value;
-        length++;
+        h--;
+        length_h++;
     }
+
     void pop_back() {
-        if(length == capacity/4){
-            capacity /= 4;
-            int *b = new int[capacity]{};
-            memcpy(b,h,length*sizeof(int));
-            delete a;
-            a = b;
-            h = a;
-            t = a+length;
+        if(t < tail.back() && ) {
+            tail.pop_back();
+            t = tail.back
         }
         t--;
-        length--;
+        lb--;
     }
+
     void pop_front() {
-        if(length == capacity/4){
-            capacity /= 4;
-            int *b = new int[capacity]{};
-            memcpy(b,h,length*sizeof(int));
-            delete a;
-            a = b;
-            h = a;
-            t = a+length;
+        if(h == head->a+capacity_f-1 && lf) {
+            head = head->next;
+            delete head->prev->a;
+            delete head->prev;
+            h = head->a-1;
         }
         h++;
-        length--;
+        lf--;
     }
-    int front(){return *h;}
-    int back( ){return *t;}
-    int size( ){return length;}
-    int& operator[](int idx){return *(h+idx);}
 };
 
 int main() {
     deque dq;
-    for(int i = 1; i <= 20; i++)
-        dq.push_front(i);
-    for(int i = 1; i <= 19; i++)
-        dq.pop_front();
-    cout<< dq[0];
+    dq.push_back(1);
+    dq.push_back(2);
+    dq.push_back(3);
+    dq.push_back(4);
+    dq.push_back(5);
+    dq.pop_front();
+    dq.pop_front();
+    dq.pop_front();
+    dq.pop_front();
 }
