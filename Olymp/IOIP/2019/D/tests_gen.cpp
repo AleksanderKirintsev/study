@@ -11,13 +11,13 @@ int main(int argc,char **argv){
     for(int i = 0; i < n; i++){
         for(int j = 0; j < m; j++){
             int a = rand()%10;
-            printf("%d ",a);
+            printf("%2d ",a);
             ps[j+1] = ps[j]+a;
         }
         cout << "\n";
     }
     for(int i = 1; i<= m; i++)
-        cout << ps[i] << " ";
+        printf("%2d ",ps[i]);
 
     return 0;
 }
