@@ -5,7 +5,7 @@ using namespace std;
 #define ll long long
 #define a(x,y) a[x*(m+2)+y]
 #define b(x,y) b[x*(m+2)+y]
-ll n,m,p,*a,*b,r,d,h;
+ll n,m,p,*a,*b,r,d,h,max_sum = -1;
 
 void transpose(){
     ll *tmp = new ll[(n+2)*(m+2)]{};
@@ -18,13 +18,13 @@ void transpose(){
 }
 
 inline ll find_solution(ll ceil, ll floor){
-    ll ans = -1,mn,mx;
+    ll ans = -1;
     map<ll,ll[2]> mp;
     for(int i = 1,j = m; i <= m/2; i++,j--){
         ll s = b(ceil,i) - b((floor-1),i);
         ll s1 = b(ceil,j) - b((floor-1),j);
         auto it = mp[s%p],it1 = mp[s1%p];
-        if(s1-s < ans)
+        if(s1 < max_sum)
             return ans;
         if(it[0] == 0 && it[1] == 0){
             it[0] = 1e18;
@@ -40,12 +40,8 @@ inline ll find_solution(ll ceil, ll floor){
         if(it[0] != 1e18)
             it[1] = max(it[1],s);
         it[0] = min(it[0],s);
-        if(it[1]-it[0] > ans){
+        if(it[1]-it[0] > ans)
             ans = it[1]-it[0];
-            mn = it[0];
-            mx = it[1];
-        }
-
 
         if(s1 % p == 0)
             ans = max(ans,s1);
@@ -59,7 +55,7 @@ inline ll find_solution(ll ceil, ll floor){
     return ans;
 }
 
-void print(){
+void print(int *a){
     cout << "\n";
     for(int i = 1; i <= n; i++){
         for(int j = 1; j <= m; j++)
@@ -69,7 +65,7 @@ void print(){
     cout << "\n";
 }
 int main() {
-//    freopen("check/07","r",stdin);
+//   freopen("check/15","r",stdin);
 //    freopen("transpose","w",stdout);
     cin.tie(0);
     cin.sync_with_stdio(0);
@@ -89,13 +85,12 @@ int main() {
         for(ll j = 1,t = 0; j <= m; j++)
             b(i,j) = (t+=a(i,j))+b((i-1),j);
 
-    ll ans = -1;
     for(int i = n; i >= 1; i--)
         for(ll c = n, f = n-i+1; f >= 1; c--,f--){
             ll sum = find_solution(c,f);
-            ans = max(ans,sum);
+            max_sum = max(max_sum,sum);
         }
 
-    cout << ans;
+    cout << max_sum;
     return 0;
 }
