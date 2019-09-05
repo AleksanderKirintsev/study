@@ -23,33 +23,32 @@ inline ll find_solution(ll ceil, ll floor){
     for(int i = 1,j = m; i <= m/2; i++,j--){
         ll s = b(ceil,i) - b((floor-1),i);
         ll s1 = b(ceil,j) - b((floor-1),j);
-        auto it = mp[s%p],it1 = mp[s1%p];
-        if(s1 < max_sum)
+        if(s1 < max_sum || s1 < ans)
             return ans;
-        if(it[0] == 0 && it[1] == 0){
-            it[0] = 1e18;
-            it[1] = -1;
+        if(mp[s%p][0] == 0 && mp[s%p][1] == 0){
+            mp[s%p][0] = 1e18;
+            mp[s%p][1] = -1;
         }
-        if(it1[0] == 0 && it1[1] == 0){
-            it1[0] = 1e18;
-            it1[1] = -1;
+        if(mp[s1%p][0] == 0 && mp[s1%p][1] == 0){
+            mp[s1%p][0] = 1e18;
+            mp[s1%p][1] = -1;
         }
 
         if(s % p == 0)
             ans = max(ans,s);
-        if(it[0] != 1e18)
-            it[1] = max(it[1],s);
-        it[0] = min(it[0],s);
-        if(it[1]-it[0] > ans)
-            ans = it[1]-it[0];
+        if(mp[s%p][0] != 1e18)
+            mp[s%p][1] = max(mp[s%p][1],s);
+        mp[s%p][0] = min(mp[s%p][0],s);
+        if(mp[s%p][1]-mp[s%p][0] > ans)
+            ans = mp[s%p][1]-mp[s%p][0];
 
         if(s1 % p == 0)
             ans = max(ans,s1);
-        if(it1[1] != -1)
-            it1[0] = min(it1[0],s1);
-        it1[1] = max(it1[1],s1);
-        if(it1[1]-it1[0] > ans)
-            ans = it1[1]-it1[0];
+        if(mp[s1%p][1] != -1)
+            mp[s1%p][0] = min(mp[s1%p][0],s1);
+        mp[s1%p][1] = max(mp[s1%p][1],s1);
+        if(mp[s1%p][1]-mp[s1%p][0] > ans)
+            ans = mp[s1%p][1]-mp[s1%p][0];
 
     }
     return ans;
@@ -65,7 +64,7 @@ void print(int *a){
     cout << "\n";
 }
 int main() {
-//   freopen("check/15","r",stdin);
+//    freopen("check/23","r",stdin);
 //    freopen("transpose","w",stdout);
     cin.tie(0);
     cin.sync_with_stdio(0);
