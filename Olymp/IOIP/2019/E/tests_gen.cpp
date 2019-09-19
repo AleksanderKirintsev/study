@@ -13,12 +13,12 @@ int main(int argc,char **argv){
     cout << n << "\n";
     int r = n-1;
     q.push_back(rand()% n);
-    while(!q.empty() && r > 0){
+    while(r > 0){
         int v = q.front();
         q.pop_front();
         bs[v] = 1;
         int c = rand()%r;
-        c += (c == 0 && r > 0);
+        c += (c == 0);
         r-=c;
         for(int i = 0; i < c; i++){
             int v1 = rand() % n;
