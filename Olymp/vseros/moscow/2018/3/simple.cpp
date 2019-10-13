@@ -2,20 +2,20 @@
 #include <iomanip>
 using namespace std;
 const int DAY = 24*3600;
-struct Time{
+struct Time {
     int h,m,s;
 };
 
 istream& operator>> ( istream& in, Time& t) {
-        char c;
-        return in >> t.h >> c >> t.m >> c >> t.s;
-    }
+    char c;
+    return in >> t.h >> c >> t.m >> c >> t.s;
+}
 
 Time a,b,c;
-int ttos(Time& t){
+int ttos(Time& t) {
     return t.h*3600+t.m*60+t.s;
 }
-Time stot(int s){
+Time stot(int s) {
     return {s/3600,s%3600/60,s%60};
 }
 int main() {
