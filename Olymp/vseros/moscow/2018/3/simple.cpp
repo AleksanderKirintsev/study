@@ -1,14 +1,18 @@
 #include <iostream>
-#include <iomanip>
 using namespace std;
-const int DAY = 24*3600;
+const int SEC_PER_DAY = 24*3600;
 struct Time {
     int h,m,s;
 };
 
-istream& operator>> ( istream& in, Time& t) {
+istream& operator>> ( istream& is, Time& t) {
     char c;
-    return in >> t.h >> c >> t.m >> c >> t.s;
+    return is >> t.h >> c >> t.m >> c >> t.s;
+}
+ostream& operator<< ( ostream& os, const Time& t) {
+    char buffer[8];
+    sprintf(buffer,"%02d:%02d:02d", t.h, t.m, t.s);
+    return os << buffer;
 }
 
 Time a,b,c;
@@ -20,10 +24,11 @@ Time stot(int s) {
 }
 int main() {
     cin >> a >> b >> c;
-    int s1,s2,s3;
-    s1 = ttos(a),s2 = ttos(b),s3 = ttos(c);
-    s3+=(s1>s3 ? DAY : 0);
-    s2 = (s2 + (s3-s1)/2)% DAY;
-    printf("%02d:%02d:%02d",s2/3600,s2%3600/60,s2%60);
+    int aa,bb,s3;
+    aa = ttos(a),bb = ttos(b),s3 = ttos(c);
+    s3+=(aa > s3 ? SEC_PER_DAY : 0);
+    b = stot((bb + (s3-aa)/2)% SEC_PER_DAY);
+
+    cout << b;
     return 0;
 }
