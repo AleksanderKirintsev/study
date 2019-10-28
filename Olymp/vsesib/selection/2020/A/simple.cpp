@@ -2,40 +2,32 @@
 #include <algorithm>
 using namespace std;
 #define ll long long
-ll n,k,t,r,*a;
-string s,tmp1,tmp2;
-bool F(ll &a, ll &b, ll &c, ll x){
-    if(x <= c){
-        c-=x;
-    }else{
-        x-=c;
-        a -= x/b+(x%b > 0);
-        c = b-(x%b);
-    }
-    return (a >= 0);
-}
+
+int n,r,*data;
+ll k,t;
+
 int main() {
+//    freopen("tests/01","r",stdin);
     cin >> n >> k >> t;
-    a = new ll[n];
-    for(ll i = 0; i < n; i++) {
-        cin >> s;
-        tmp1 = "",tmp2 = "";
-        for(ll j = 0; j < 3; j++) {
-            tmp1+=s[j];
-            tmp2+=s[j+4];
-        }
-        a[i] = stoi(tmp1) * stoi(tmp2);
+    data = new int[n];
+    for(int i = 0; i < n; i++) {
+        int x,y;
+        char c;
+        cin >> x >> c >> y;
+        data[i] = x*y;
 
     }
 
-    sort(a,a+n);
-    if(t > k)
-        swap(t,k);
+    sort(data,data+n);
+    t*=k;
 
-    ll q = 0;
-    for(ll i = 0; i < n && t >= 0; i++){
-        q += F(t,k,r,a[i]);
+    int q = 0;
+    for(int i = 0; i < n && t > 0; i++,q++) {
+        if(t < data[i])
+            break;
+        t -= data[i];
     }
+
     cout << q;
     return 0;
 }
