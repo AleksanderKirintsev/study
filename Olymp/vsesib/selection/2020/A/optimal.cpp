@@ -6,8 +6,21 @@ using namespace std;
 int n,r,*data;
 ll k,t;
 
+struct rc {
+    ll a,b,c;
+    rc operator+=(int l) {
+        c+=l;
+        a+=(c/b);
+        c%=b;
+        return {a,b,c};
+    }
+    bool operator <=(rc l) {
+        return (a < l.a || (a == l.a && c == l.c));
+    }
+};
+
 int main() {
-//    freopen("tests/01","r",stdin);
+    //freopen("tests/01","r",stdin);
     cin >> n >> k >> t;
     data = new int[n];
     for(int i = 0; i < n; i++) {
@@ -19,16 +32,14 @@ int main() {
 
     sort(data,data+n);
 
-    ll q = 0,a = min(t,k),b = max(t,k),c = 0;
+    ll q = 0;
+    rc s = {0,max(k,t),0},abc ={min(k,t),max(k,t),0};
     for(int i = 0; i < n; i++) {
-        c-=data[i];
-        if(c < 0){
-            a-= (-c)/b+((-c)%b > 0);
-            c = b-((-c)%b);
-        }
-        if(a < 0)
+        s+=data[i];
+        if(s <= abc)
+            q++;
+        else
             break;
-        q++;
     }
     cout << q;
     return 0;
