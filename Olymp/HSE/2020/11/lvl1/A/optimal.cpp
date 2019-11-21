@@ -1,39 +1,49 @@
 #include <iostream>
-#include <set>
 #include <vector>
+#include <algorithm>
 using namespace std;
-#define K first
-#define V second
-
 int n,k,*s;
 
-multiset<pair<int,vector<int>>> ss;
+struct man{int r,p; vector<int> d;};
+man *v;
+struct cmp{
+    bool operator()(const man &l,const man &r){
+        return(l.r < r.r);
+    }
+};
 int main() {
     cin >> n >> k;
     s = new int[k];
+    v = new man[n];
+    int ans[n];
+
     for(int i = 0; i < k; i++)
         cin >> s[i];
-
-    for(int i = 0; i < n; i++) {
-        int r,t,x;
-        vector<int> a;
-        cin >> r >> t;
-        for(int i = 0; i < t; i++) {
+    for(int i = 0; i < n; i++){
+        int t,x;
+        cin >> v[i].r >> t;
+        v[i].p = i;
+        v[i].d.resize(t);
+        for(int j = 0; j < t; j++){
             cin >> x;
-            a.push_back(x);
+            v[i].d[j] = x-1;
         }
-        ss.insert({r,a});
     }
-    for(auto x:ss){
-        int f = 1;
-        for(auto y : x.V){
-            if(s[y-1] != 0){
-                cout << y << " ";
+
+    sort(v,v+n,cmp());
+
+    for(int i = 0; i < n; i++){
+        bool f = 1;
+        for(int j = 0; j < v[i].d.size(); j++)
+            if(s[v[i].d[j]] > 0){
+                ans[v[i].p] = v[i].d[j]+1;
+                s[v[i].d[j]]--;
                 f = 0;
                 break;
             }
-        }
-        if(f) cout << -1 << " ";
+        ans[v[i].p] = (f ? -1 : ans[v[i].p]);
     }
+    for(int i = 0; i < n; i++)
+        cout << ans[i] << " ";
     return 0;
 }
