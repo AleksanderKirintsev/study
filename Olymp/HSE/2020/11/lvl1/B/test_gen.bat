@@ -7,7 +7,7 @@ rem %~n0.exe 10 70 2 > tests\12
 rem %~n0.exe 10 70 3 > tests\13
 rem %~n0.exe 10 70 4 > tests\14
 
-for /l %%i in (0,1,9) do %~n0.exe 50 10 %%i > tests\1%%i
+for /l %%i in (0,1,9) do %~n0.exe 20 5 %%i > tests\1%%i
 for /l %%i in (0,1,9) do %~n0.exe 100 20 %%i > tests\2%%i
 for /l %%i in (0,1,9) do %~n0.exe 200 40 %%i > tests\3%%i
 for /l %%i in (0,1,9) do %~n0.exe 2000 100 %%i > tests\4%%i
