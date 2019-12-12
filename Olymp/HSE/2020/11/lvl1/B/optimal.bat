@@ -1,6 +1,6 @@
 @echo off
 
-g++ -std=c++11 -O2 -W1, --stack, 67108864 %~n0.cpp -o %~n0.exe
+g++ -std=c++11 -O2 -Wl,--stack,67108864 %~n0.cpp -o %~n0.exe
 set dst=tests
 
 FOR %%i IN (%dst%\*.a) DO (
