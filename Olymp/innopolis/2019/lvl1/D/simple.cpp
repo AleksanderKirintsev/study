@@ -1,29 +1,39 @@
-#include <iostream>
+ #include <iostream>
 #include <algorithm>
 using namespace std;
 #define ll long long
-const ll LIM = 1e16;
+#define X first
+#define Y second
+const ll LIM = 1e10;
 int n,*a,v,s;
-ll f(int i,int j, int r){
-    if(j == 0 || (j == 0 && i == n-2))
-        return r;
-    if(i == n-2)
-        return 1e6;
-    ll sum = LIM;
-    for(int x = 0; x <= min(v,j); x++)
-        if(v*(n-i) >= j-x)
-            sum = min(sum,r*x*a[i]+f(i+1,j-x,x));
+
+pair<ll,int> g(int i,int j, int h);
+ll f(int i,int j, int h){
+    return g(i,j,h).X;
+}
+pair<ll,int> g(int i,int j, int h){
+    if(j == 0)
+        return {0,0};
+    pair<ll,int> sum = {LIM,0};
+    ll x = max(0,j-v*(n-i-1));
+    ll y = min(v,j);
+    for(int q = x; q <= y; q++)
+            sum = min(sum,{q*a[i]+f(i+1,j-q,q),q});
     return sum;
 }
 int main() {
+    freopen("tests/00","r",stdin);
     cin >> n >> s >> v;
     a = new int[n];
     for(int i = 0; i < n-1; i++)
         cin >> a[i];
 
-    ll ans = LIM;
-    for(int i = 0; i <= min(v,s); i++)
-        ans = min(ans,f(0,s-i,i));
-    cout << ans;
+    cout << f(0,s,0) << "\n";
+    for(int i = 0,j = s, h = 0; i < n; i++,j-=h){
+        h = g(i,j,h).Y;
+        cout << h << " ";
+    }
+
+
     return 0;
 }
