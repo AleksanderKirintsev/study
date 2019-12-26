@@ -1,30 +1,41 @@
 #include <iostream>
-#include <cmath>
+#include <map>
 using namespace std;
 #define ll long long
+#define X first
+#define Y second
+#define f(i,j) f[(i)*(s+1)+(j)]
+const ll LIM = 1e17;
+int n,*a,v,s;
+ll *f;
 
-ll disc(ll h) {
-    double D = 1 + 8 * h;
-    return ((-1 + floor(sqrt(D)))/2);
-}
-
-ll count(ll m, ll k) {
-    ll h = m / k;
-    ll n = disc(h);
-    ll r = m - (n + 1) * n / 2 * k;
-    return (n * k + r / (n+1));
+pair<ll,int> g(int i,int j) {
+    //cout << i << " " << j << " " << h << "\n";
+    if(j == 0)
+        return {0,0};
+    pair<ll,int> sum = {LIM,0};
+    ll x = max(0,j-v*(n-i-1));
+    ll y = min(v,j);
+    for(int q = x; q <= y; q++)
+        sum = min(sum, {q*a[i]+f(i+1,j-q),q});
+    return sum;
 }
 int main() {
-    //freopen("tests/00","r",stdin);
-    cin.tie(0);
-    cin.sync_with_stdio(0);
-    cout.tie(0);
+    freopen("tests/00","r",stdin);
+    cin >> n >> s >> v;
+    a = new int[n] {};
+    f = new ll[n*(s+1)];
+    for(int i = 0; i < n-1; i++)
+        cin >> a[i];
 
-    ll t,m,k;
-    cin >> t;
-    for (int i = 0; i < t; i++) {
-        cin >> m >> k;
-        cout << count(m,k) << '\n';
-    }
+    f(n,0) = 0;
+    for(int i = n-1; i >= 0; i--)
+        for(int j = 0; j <= s; j++)
+            f(i,j) = g(i,j).X;
+    ll mn = 0;
+    cout << f(0,s);
+
+
+
     return 0;
 }
