@@ -1,31 +1,21 @@
 #include <iostream>
 #include <string>
-#include <algorithm>
 using namespace std;
 string s;
-int f(string x) {
-    int q = 0,ans = x.size();
-    string pr,su,tmp;
-    tmp = x;
-    reverse(tmp.begin(),tmp.end());
-    for(int i = 0; i < x.size()/2; i++) {
-        pr+=x[i];
-        su+=tmp[i];
-        reverse(su.begin(),su.end());
-        if(pr == su) {
-            string s1,s2;
-            for(int i = pr.size(); i < x.size(); i++)
-                s1+=x[i];
-            for(int i = 0; i < x.size()-su.size(); i++)
-                s2+=x[i];
-            ans = min(ans,min(f(s1),f(s2)));
-        }
-        reverse(su.begin(),su.end());
+int f(int l, int r) {
+    int q = r-l;
+    for(int w = 1; w  <= (r-l)/2; w++){
+        int c = 1;
+        for(int i = l,j = r-w; j < r && c; i++,j++)
+            if(s[i] != s[j])
+                c = 0;
+        if(c)
+            q = min(q,min(f(l+w,r),f(l,r-w)));
     }
-    return ans;
+    return q;
 }
 int main() {
     cin >> s;
-    cout << f(s);
+    cout << f(0,s.size());
     return 0;
 }
